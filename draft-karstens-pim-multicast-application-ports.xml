@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="rfc7991bis.rnc"?>
+<!DOCTYPE rfc [
+  <!ENTITY nbsp "&#160;">
+]>
+<?rfc toc="yes"?>
+<?rfc tocompact="yes"?>
+<?rfc tocdepth="3"?>
+<?rfc tocindent="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc comments="yes"?>
+<?rfc inline="yes"?>
+<?rfc compact="yes"?>
+<?rfc subcompact="no"?>
+<rfc
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  category="std"
+  docName="draft-karstens-pim-multicast-application-ports-00"
+  ipr="trust200902"
+  submissionType="IETF"
+  consensus="true">
+
+  <front>
+    <title abbrev="Mcast App Ports">The Multicast Application Ports</title>
+
+    <author fullname="Nate Karstens" initials="N" surname="Karstens">
+      <organization>Garmin International</organization>
+
+      <address>
+        <email>nate.karstens@gmail.com</email>
+      </address>
+    </author>
+
+    <author fullname="Stuart Cheshire" initials="S" surname="Cheshire">
+      <organization>Apple Inc.</organization>
+
+      <address>
+        <email>cheshire@apple.com</email>
+      </address>
+    </author>
+
+    <author fullname="Mike McBride" initials="M" surname="McBride">
+      <organization>Futurewei</organization>
+
+      <address>
+        <email>michael.mcbride@futurewei.com</email>
+      </address>
+    </author>
+
+    <date day="27" month="May" year="2024"/>
+
+    <abstract>
+      <t>TODO</t>
+    </abstract>
+  </front>
+
+  <middle>
+    <section title="Introduction">
+      <t>The Internet community has recognized the need to be judicious when assigning port numbers (see <xref target="RFC7605" sectionFormat="comma" section="6"/>). With unicast applications, the need for explicit port assignment has been reduced by techniques such as locally assigning a dynamic port, combined with some mechanism for advertising that port (see <xref target="RFC7605" sectionFormat="comma" section="7.1"/>). Dynamic assignment does not work with multicast applications because it is impossible to guarantee that the port remains unused by all hosts that may want to join a given multicast group. The result is that each multicast application has had to have its own dedicated port assignment.</t>
+
+      <t>In the TCP/IP model, the port number in the transport layer multiplexes applications within a host (see <xref target="RFC1122" sectionFormat="comma" section="4.1.1"/> and <xref target="RFC7605" sectionFormat="comma" section="5"/>). With multicast, the use of a port number to multiplex applications is unnecessary because the destination multicast address already provides a unique identifier for the application.</t>
+
+      <t>Because of the desire to conserve port numbers and the fact that a port is not necessary to multiplex multicast applications, this document assigns two UDP ports that may be used with multicast applications.</t>
+
+      <t>Use of these ports is optional because there may be circumstances where assigning a port is preferred, such as when participants cannot meet the requirements in <xref target="host"/> and <xref target="application"/>.</t>
+
+      <section title="Requirements Language" anchor="requirements">
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and only when, they appear in all capitals, as shown here.</t>
+      </section>
+    </section>
+
+    <section title="Assignment" anchor="assignment">
+      <t>This document assigns UDP port 49151 and gives it the service name "Multicast Application Port". It also assigns UDP port 49150 and give it the service name "Multicast Application Port (Secondary)". These two ports are at the end of the range of User ports <xref target="RFC6335" sectionFormat="comma" section="6"/> to differentiate them from other port assignments.</t>
+
+      <t>Two ports are assigned because RTP recommends using a sequential port pair: an even port for RTP and the next higher port for RTCP (see <xref target="RFC3550" sectionFormat="of" section="11"/>). RTP is a popular protocol for multicast video streams and many implementations require this port scheme.</t>
+
+      <t>The assigned ports may be used as a source port if the application exclusively uses multicast messages. If any application messages are unicast, then a dynamic port should be used as the source port. This allows receivers to know which port to send replies to.</t>
+    </section>
+
+    <section title="Host Requirements" anchor="host">
+      <t>Hosts shall regard the use of these ports as non-exclusive. In practice, this means hosts using POSIX socket APIs would consider the <tt>SO_REUSEADDR</tt> socket option as having been enabled, regardless of the actual state of that flag <xref target="POSIX"/>.</t>
+
+      <t>Hosts shall discard all incoming, non-multicast packets that use these destination ports.</t>
+    </section>
+
+    <section title="Application Requirements" anchor="application">
+      <t>Applications running on non-conformant hosts can successfully use these ports if they meet the requirements in this section.</t>
+      
+      <t>Applications running on a non-conformant host shall not prevent other applications from using these ports. In practice, this means that applications using POSIX socket APIs must enable the <tt>SO_REUSEADDR</tt> socket option <xref target="POSIX"/>.</t>
+
+      <t>Applications running on a non-conformant host shall discard all datagrams that do not have the multicast address used by the application.</t>
+    </section>
+
+    <section title="Security Considerations">
+      <t>Applications running on non-conformant hosts are vulnerable to a denial of service attack if another application claims exclusive access to the ports.</t>
+    </section>
+
+    <section title="IANA Considerations">
+      <t>IANA should assign ports 49150 and 49151 as described in <xref target="assignment"/>. Both assignments should reference this document.</t>
+
+      <t>IANA should update its "Application for Service Names and User Port Numbers" <xref target="IANA-APP"/> to reference this document, ask if a Multicast Application Port may be used, and require an explanation if not.</t>
+    </section>
+
+    <section title="Acknowledgement">
+      <t>Special thanks to the National Marine Electronics Association for their contributions in developing marine industry standards and their support for this research.</t>
+
+      <t>Thanks also to the members of the PIM working group for their review of this draft.</t>
+    </section>
+  </middle>
+
+  <back>
+    <references title="Normative References">
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+    </references>
+    <references title="Informative References">
+      <reference anchor="IANA-APP" target="https://www.iana.org/form/ports-services">
+        <front>
+          <title>Application for Service Names and User Port Numbers</title>
+          <author>
+            <organization>Internet Assigned Numbers Authority</organization>
+          </author>
+        </front>
+      </reference>
+      <reference anchor="POSIX" target="https://pubs.opengroup.org/onlinepubs/9699919799/">
+        <front>
+          <title>"The Open Group Base Specifications", Issue 7, 2018 edition</title>
+          <author>
+            <organization>The Open Group</organization>
+          </author>
+          <date month="December" year="2001" />
+        </front>
+      </reference>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.1122.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3550.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6335.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7605.xml"/>
+    </references>
+  </back>
+</rfc>
