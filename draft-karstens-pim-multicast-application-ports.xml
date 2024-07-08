@@ -57,7 +57,7 @@
 
   <middle>
     <section title="Introduction">
-      <t>The Internet community has recognized the need to be judicious when assigning port numbers (see <xref target="RFC7605" sectionFormat="comma" section="6"/>). With unicast applications, the need for explicit port assignment has been reduced by techniques such as locally assigning a dynamic port, combined with some mechanism for advertising that port (see <xref target="RFC7605" sectionFormat="comma" section="7.1"/>). Dynamic assignment does not work with multicast applications because it is impossible to guarantee that the port remains unused by all hosts that may want to join a given multicast group. The result is that each multicast application has had to have its own dedicated port assignment.</t>
+      <t>The Internet community has recognized the need to be judicious when assigning port numbers (see <xref target="RFC7605" sectionFormat="comma" section="6"/>). With unicast applications, the need for explicit port assignment has been reduced by techniques such as locally assigning a dynamic port, combined with some mechanism for advertising that port (see <xref target="RFC7605" sectionFormat="comma" section="7.1"/>). Dynamic assignment does not work with multicast applications because it is impossible to guarantee that the port remains unused by all hosts that may want to join a given multicast group. The result is that each multicast application-layer protocol has had to have its own dedicated port assignment. Even worse, each different use of that multicast application-layer protocol has had to have a different unique port assigned.</t>
 
       <t>In the TCP/IP model, the port number in the transport layer multiplexes applications within a host (see <xref target="RFC1122" sectionFormat="comma" section="4.1.1"/> and <xref target="RFC7605" sectionFormat="comma" section="5"/>). With multicast, the use of a port number to multiplex applications is unnecessary because the destination multicast address already provides a unique identifier for the application.</t>
 
@@ -87,7 +87,7 @@
     <section title="Application Requirements" anchor="application">
       <t>Applications running on non-conformant hosts can successfully use these ports if they meet the requirements in this section.</t>
       
-      <t>Applications running on a non-conformant host shall not prevent other applications from using these ports. In practice, this means that applications using POSIX socket APIs must enable the <tt>SO_REUSEADDR</tt> socket option <xref target="POSIX"/>.</t>
+      <t>Applications running on a non-conformant host shall not prevent other applications from using these ports. In practice, this means that applications using POSIX socket APIs must enable the <tt>SO_REUSEADDR</tt> and/or <tt>SO_REUSEPORT</tt> socket options <xref target="POSIX"/>.</t>
 
       <t>Applications running on a non-conformant host shall discard all datagrams that do not have the multicast address used by the application.</t>
     </section>
@@ -97,9 +97,9 @@
     </section>
 
     <section title="IANA Considerations">
-      <t>IANA should assign ports 49150 and 49151 as described in <xref target="assignment"/>. Both assignments should reference this document.</t>
+      <t>IANA is requested to assign ports 49150 and 49151 as described in <xref target="assignment"/>. Both assignments should reference this document.</t>
 
-      <t>IANA should update its "Application for Service Names and User Port Numbers" <xref target="IANA-APP"/> to reference this document, ask if a Multicast Application Port may be used, and require an explanation if not.</t>
+      <t>IANA is requested to update its "Application for Service Names and User Port Numbers" <xref target="IANA-APP"/> to reference this document, ask if a Multicast Application Port may be used, and require an explanation if not.</t>
     </section>
 
     <section title="Acknowledgement">
