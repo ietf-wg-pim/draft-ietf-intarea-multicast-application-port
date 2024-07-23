@@ -16,7 +16,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="std"
-  docName="draft-karstens-pim-multicast-application-ports-00"
+  docName="draft-karstens-pim-multicast-application-ports-01"
   ipr="trust200902"
   submissionType="IETF"
   consensus="true">
@@ -48,7 +48,7 @@
       </address>
     </author>
 
-    <date day="7" month="July" year="2024"/>
+    <date day="23" month="July" year="2024"/>
 
     <abstract>
       <t>This document discusses the drawbacks of the current practice of assigning a UDP port to each multicast application. Such assignments are redundant because the multicast address already uniquely identifies the data. The document proposes assigning two UDP ports specifically for use with multicast applications and lists requirements for using these ports.</t>
