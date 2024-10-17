@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
     sockaddr.sin_addr = mreq.imr_interface;
     sockaddr.sin_port = htons(MCAST_APP_PORT);
 
-    sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    sock = socket(AF_INET, SOCK_DGRAM, 0);
     if (sock == INVALID_SOCKET) {
         fprintf(stderr, "socket() failure: %d\n", WSAGetLastError());
         return 1;
