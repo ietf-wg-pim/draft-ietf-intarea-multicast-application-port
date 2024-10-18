@@ -15,6 +15,7 @@ int main(int argc, char *argv[]) {
     struct sockaddr_in sockaddr;
     struct ip_mreq mreq;
     int sock;
+    int reuseaddr = 1;
     char buf[128];
     ssize_t rcvd;
 
@@ -40,6 +41,11 @@ int main(int argc, char *argv[]) {
     sock = socket(AF_INET, SOCK_DGRAM, 0);
     if (sock == SOCKET_ERROR) {
         perror("socket() failure");
+        return 1;
+    }
+
+    if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char*)&reuseaddr, sizeof(reuseaddr)) == SOCKET_ERROR) {
+        perror("SO_REUSEADDR failure");
         return 1;
     }
 
