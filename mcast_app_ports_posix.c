@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     ssize_t rcvd;
 
     if (argc != 3) {
-        fprintf(stderr, "Usage: mcast_app_ports_linux [multicast address] [interface index]\n");
+        fprintf(stderr, "Usage: mcast_app_ports_posix [multicast address] [interface index]\n");
         return 1;
     }
 
