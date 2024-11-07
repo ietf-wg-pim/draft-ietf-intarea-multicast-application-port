@@ -7,7 +7,7 @@
 
 #pragma comment(lib, "Ws2_32.lib")
 
-#define MCAST_APP_PORT	49151
+#define MCAST_APP_PORT	49149
 
 int main(int argc, char *argv[]) {
     WORD wVersionRequested;
@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     int rcvd;
 
     if (argc != 3) {
-        fprintf(stderr, "Usage: mcast_app_ports_windows [multicast address] [interface address]\n");
+        fprintf(stderr, "Usage: mcast_app_port_windows [multicast address] [interface address]\n");
         return 1;
     }
 

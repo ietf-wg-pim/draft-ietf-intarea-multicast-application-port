@@ -6,7 +6,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 
-#define MCAST_APP_PORT	49151
+#define MCAST_APP_PORT	49149
 
 #define min(a, b) ((a) < (b) ? (a) : (b))
 #define SOCKET_ERROR -1
@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
     ssize_t rcvd;
 
     if (argc != 3) {
-        fprintf(stderr, "Usage: mcast_app_ports_posix [multicast address] [interface index]\n");
+        fprintf(stderr, "Usage: mcast_app_port_posix [multicast address] [interface index]\n");
         return 1;
     }
 

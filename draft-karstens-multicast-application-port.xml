@@ -16,13 +16,13 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="std"
-  docName="draft-karstens-pim-multicast-application-ports-01"
+  docName="draft-karstens-multicast-application-port-00"
   ipr="trust200902"
   submissionType="IETF"
   consensus="true">
 
   <front>
-    <title abbrev="Mcast App Ports">The Multicast Application Ports</title>
+    <title abbrev="Mcast App Port">The Multicast Application Port</title>
 
     <author fullname="Nate Karstens" initials="N" surname="Karstens">
       <organization>Garmin International</organization>
@@ -48,10 +48,10 @@
       </address>
     </author>
 
-    <date day="23" month="July" year="2024"/>
+    <date day="7" month="November" year="2024"/>
 
     <abstract>
-      <t>This document discusses the drawbacks of the current practice of assigning a UDP port to each multicast application. Such assignments are redundant because the multicast address already uniquely identifies the data. The document proposes assigning two UDP ports specifically for use with multicast applications and lists requirements for using these ports.</t>
+      <t>This document discusses the drawbacks of the current practice of assigning a UDP port to each multicast application. Such assignments are redundant because the multicast address already uniquely identifies the data. The document proposes assigning a UDP port specifically for use with multicast applications and lists requirements for using this port.</t>
     </abstract>
   </front>
 
@@ -61,9 +61,9 @@
 
       <t>In the TCP/IP model, the port number in the transport layer multiplexes applications within a host (see <xref target="RFC1122" sectionFormat="comma" section="4.1.1"/> and <xref target="RFC7605" sectionFormat="comma" section="5"/>). With multicast, the use of a port number to multiplex applications is unnecessary because the destination multicast address already provides a unique identifier for the application.</t>
 
-      <t>Because of the desire to conserve port numbers and the fact that a port is not necessary to multiplex multicast applications, this document assigns two UDP ports that may be used with multicast applications.</t>
+      <t>Because of the desire to conserve port numbers and the fact that a port is not necessary to multiplex multicast applications, this document assigns a UDP port that may be used with multicast applications.</t>
 
-      <t>Use of these ports is optional because there may be circumstances where assigning a port is preferred, such as when participants cannot meet the requirements in <xref target="host"/> and <xref target="application"/>.</t>
+      <t>Use of this port is optional because there may be circumstances where assigning a port is preferred, such as when participants cannot meet the requirements in <xref target="host"/> and <xref target="application"/>.</t>
 
       <section title="Requirements Language" anchor="requirements">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and only when, they appear in all capitals, as shown here.</t>
@@ -71,33 +71,31 @@
     </section>
 
     <section title="Assignment">
-      <t>This document assigns UDP port 49151 and gives it the service name "Multicast Application Port". It also assigns UDP port 49150 and give it the service name "Multicast Application Port (Secondary)". These two ports are at the end of the range of User ports <xref target="RFC6335" sectionFormat="comma" section="6"/> to differentiate them from other port assignments.</t>
+      <t>This document REQUESTS assignment of UDP port 49149 and gives it the service name "Multicast Application Port". This port is near the end of the range of User ports <xref target="RFC6335" sectionFormat="comma" section="6"/> to differentiate it from other port assignments.</t>
 
-      <t>Two ports are assigned because RTP recommends using a sequential port pair: an even port for RTP and the next higher port for RTCP (see <xref target="RFC3550" sectionFormat="of" section="11"/>). RTP is a popular protocol for multicast video streams and many implementations require this port scheme.</t>
-
-      <t>The assigned ports may be used as a source port if the application exclusively uses multicast messages. If any application messages are unicast, then a dynamic port should be used as the source port. This allows receivers to know which port to send replies to.</t>
+      <t>The REQUESTED port may be used as a source port if the application exclusively uses multicast messages. If any application messages are unicast, then a dynamic port should be used as the source port. This allows receivers to know which port to send replies to.</t>
     </section>
 
     <section title="Host Requirements" anchor="host">
-      <t>Hosts shall regard the use of these ports as non-exclusive. In practice, this means hosts using POSIX socket APIs would consider the <tt>SO_REUSEADDR</tt> socket option as having been enabled, regardless of the actual state of that flag <xref target="POSIX"/>.</t>
+      <t>Hosts shall regard the use of this port as non-exclusive. In practice, this means hosts using POSIX socket APIs would consider the <tt>SO_REUSEADDR</tt> socket option as having been enabled, regardless of the actual state of that flag <xref target="POSIX"/>.</t>
 
-      <t>Hosts shall discard all incoming, non-multicast packets that use these destination ports.</t>
+      <t>Hosts shall discard all incoming, non-multicast packets that use this destination port.</t>
     </section>
 
     <section title="Application Requirements" anchor="application">
-      <t>Applications running on non-conformant hosts can successfully use these ports if they meet the requirements in this section.</t>
+      <t>Applications running on non-conformant hosts can successfully use this port if they meet the requirements in this section.</t>
       
-      <t>Applications running on a non-conformant host shall not prevent other applications from using these ports. In practice, this means that applications using POSIX socket APIs must enable the <tt>SO_REUSEADDR</tt> and/or <tt>SO_REUSEPORT</tt> socket options <xref target="POSIX"/>.</t>
+      <t>Applications running on a non-conformant host shall not prevent other applications from using this port. In practice, this means that applications using POSIX socket APIs must enable the <tt>SO_REUSEADDR</tt> and/or <tt>SO_REUSEPORT</tt> socket options <xref target="POSIX"/>.</t>
 
       <t>Applications running on a non-conformant host shall discard all datagrams that do not have the multicast address used by the application.</t>
     </section>
 
     <section title="Security Considerations">
-      <t>Applications running on non-conformant hosts are vulnerable to a denial of service attack if another application claims exclusive access to the ports.</t>
+      <t>Applications running on non-conformant hosts are vulnerable to a denial of service attack if another application claims exclusive access to the port.</t>
     </section>
 
     <section title="IANA Considerations">
-      <t>IANA is requested to assign the following ports:</t>
+      <t>IANA is REQUESTED to assign the following port:</t>
 
       <artwork><![CDATA[
 Service Name        Multicast Application Port
@@ -107,19 +105,7 @@ Contact             IETF Chair <chair@ietf.org>
 Description         Multicast data where the application is identified
                     by the multicast address
 Reference           This document
-Port Number         49151]]>
-      </artwork>
-
-      <artwork><![CDATA[
-Service Name        Multicast Application Port (Secondary)
-Transport Protocol  UDP
-Assignee            IESG <iesg@ietf.org>
-Contact             IETF Chair <chair@ietf.org>
-Description         A secondary port for multicast data identified
-                    by the multicast address. Used when the protocol
-                    requires consecutive ports.
-Reference           This document
-Port Number         49150]]>
+Port Number         49149]]>
       </artwork>
 
       <t>IANA is requested to update its "Application for Service Names and User Port Numbers" <xref target="IANA-APP"/> to reference this document, ask if a Multicast Application Port may be used, and require an explanation if not.</t>
@@ -156,7 +142,6 @@ Port Number         49150]]>
         </front>
       </reference>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.1122.xml"/>
-      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3550.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6335.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7605.xml"/>
     </references>
