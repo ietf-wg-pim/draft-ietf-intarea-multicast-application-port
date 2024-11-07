@@ -77,15 +77,15 @@
     </section>
 
     <section title="Host Requirements" anchor="host">
-      <t>Hosts shall regard the use of this port as non-exclusive. In practice, this means hosts using POSIX socket APIs would consider the <tt>SO_REUSEADDR</tt> socket option as having been enabled, regardless of the actual state of that flag <xref target="POSIX"/>.</t>
+      <t>Hosts shall require applications using this port to use it non-exclusively. In practice, this means hosts using POSIX-like socket APIs would require applications to set the <tt>SO_REUSEADDR</tt> and/or <tt>SO_REUSEPORT</tt> socket options before binding the socket <xref target="POSIX"/>. This ensures that applications developed on a conformant host will also work on a non-conformant host.</t>
 
       <t>Hosts shall discard all incoming, non-multicast packets that use this destination port.</t>
     </section>
 
     <section title="Application Requirements" anchor="application">
-      <t>Applications running on non-conformant hosts can successfully use this port if they meet the requirements in this section.</t>
+      <t>Applications running on non-conformant hosts can ensure compatibility with conformant hosts by meeting the requirements in this section.</t>
       
-      <t>Applications running on a non-conformant host shall not prevent other applications from using this port. In practice, this means that applications using POSIX socket APIs must enable the <tt>SO_REUSEADDR</tt> and/or <tt>SO_REUSEPORT</tt> socket options <xref target="POSIX"/>.</t>
+      <t>Applications running on a non-conformant host shall not prevent other applications from using this port. In practice, this means that applications using POSIX-like socket APIs would enable the <tt>SO_REUSEADDR</tt> and/or <tt>SO_REUSEPORT</tt> socket options before binding the socket <xref target="POSIX"/>.</t>
 
       <t>Applications running on a non-conformant host shall discard all datagrams that do not have the multicast address used by the application.</t>
     </section>
