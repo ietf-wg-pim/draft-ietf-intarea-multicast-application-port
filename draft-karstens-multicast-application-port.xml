@@ -48,7 +48,7 @@
       </address>
     </author>
 
-    <date day="7" month="November" year="2024"/>
+    <date day="14" month="January" year="2025"/>
 
     <abstract>
       <t>This document discusses the drawbacks of the current practice of assigning a UDP port to each multicast application. Such assignments are redundant because the multicast address already uniquely identifies the data. The document proposes assigning a UDP port specifically for use with multicast applications and lists requirements for using this port.</t>
@@ -84,7 +84,7 @@
 
     <section title="Application Requirements" anchor="application">
       <t>Applications running on non-conformant hosts can ensure compatibility with conformant hosts by meeting the requirements in this section.</t>
-      
+
       <t>Applications running on a non-conformant host shall not prevent other applications from using this port. In practice, this means that applications using POSIX-like socket APIs would enable the <tt>SO_REUSEADDR</tt> and/or <tt>SO_REUSEPORT</tt> socket options before binding the socket <xref target="POSIX"/>.</t>
 
       <t>Applications running on a non-conformant host shall discard all datagrams that do not have the multicast address used by the application.</t>
