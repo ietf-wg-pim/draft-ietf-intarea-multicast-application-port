@@ -16,7 +16,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="std"
-  docName="draft-karstens-intarea-multicast-application-port-00"
+  docName="draft-karstens-intarea-multicast-application-port-01"
   ipr="trust200902"
   submissionType="IETF"
   consensus="true">
@@ -48,7 +48,7 @@
       </address>
     </author>
 
-    <date day="15" month="February" year="2025"/>
+    <date day="15" month="March" year="2025"/>
 
     <abstract>
       <t>This document discusses the drawbacks of the current practice of assigning a UDP port to each multicast application. Such assignments are redundant because the multicast address already uniquely identifies the data. The document proposes assigning a UDP port specifically for use with multicast applications and lists requirements for using this port.</t>
@@ -71,7 +71,7 @@
     </section>
 
     <section title="Assignment">
-      <t>This document REQUESTS assignment of UDP port 49149 and gives it the service name "Multicast Application Port". This port is near the end of the range of User ports <xref target="RFC6335" sectionFormat="comma" section="6"/> to differentiate it from other port assignments.</t>
+      <t>This document REQUESTS assignment of UDP port 49149 and gives it the service name "mcast-app-port". This port is near the end of the range of User ports <xref target="RFC6335" sectionFormat="comma" section="6"/> to differentiate it from other port assignments.</t>
 
       <t>The REQUESTED port may be used as a source port if the application exclusively uses multicast messages. If any application messages are unicast, then a dynamic port should be used as the source port. This allows receivers to know which port to send replies to.</t>
     </section>
@@ -100,17 +100,16 @@
       <t>IANA is REQUESTED to assign the following port:</t>
 
       <artwork><![CDATA[
-Service Name        Multicast Application Port
+Service Name        mcast-app-port
 Transport Protocol  UDP
 Assignee            IESG <iesg@ietf.org>
 Contact             IETF Chair <chair@ietf.org>
-Description         Multicast data where the application is identified
-                    by the multicast address
+Description         Multicast Application Port
 Reference           This document
 Port Number         49149]]>
       </artwork>
 
-      <t>IANA is requested to update its "Application for Service Names and User Port Numbers" <xref target="IANA-APP"/> to reference this document, ask if a Multicast Application Port may be used, and require an explanation if not.</t>
+      <t>IANA is requested to update its "Application for Service Names and User Port Numbers" <xref target="IANA-APP"/> to reference this document, ask if the Multicast Application Port may be used, and require an explanation if not.</t>
     </section>
 
     <section title="Acknowledgement">
