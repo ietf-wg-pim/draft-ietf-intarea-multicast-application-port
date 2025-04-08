@@ -115,7 +115,7 @@ Reference           This document
 Port Number         49149]]>
       </artwork>
 
-      <t>IANA is requested to update its "Application for Service Names and User Port Numbers" <xref target="IANA-APP"/> to reference this document, ask if the Multicast Application Port may be used, and require an explanation if not.</t>
+      <t>IANA is requested to update its "Application for Service Names and User Port Numbers" <xref target="IANA-APP"/> to reference this document, ask if the Multicast Application Port may be used, and require an explanation if not. This document does not prohibit future port assignments for multicast applications; the review team still has discretion to approve requests on a case-by-case basis.</t>
     </section>
 
     <section title="Acknowledgement">
