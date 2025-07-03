@@ -25,16 +25,22 @@
     <title abbrev="Mcast App Port">The Multicast Application Port</title>
 
     <author fullname="Nate Karstens" initials="N" surname="Karstens">
-      <organization>Garmin International</organization>
+      <organization abbrev="Garmin">Garmin International, Inc.</organization>
 
       <address>
+        <postal>
+          <street>1200 E. 151st St.</street>
+          <city>Olathe</city>
+          <region>KS</region>
+          <code>66062-3426</code>
+          <country>United States of America</country>
+        </postal>
         <email>nate.karstens@gmail.com</email>
       </address>
     </author>
 
     <author fullname="Stuart Cheshire" initials="S" surname="Cheshire">
       <organization>Apple Inc.</organization>
-
       <address>
         <email>cheshire@apple.com</email>
       </address>
@@ -42,8 +48,10 @@
 
     <author fullname="Mike McBride" initials="M" surname="McBride">
       <organization>Futurewei</organization>
-
       <address>
+        <postal>
+          <country>United States of America</country>
+        </postal>
         <email>michael.mcbride@futurewei.com</email>
       </address>
     </author>
