@@ -7,7 +7,7 @@
 
 #pragma comment(lib, "Ws2_32.lib")
 
-#define MCAST_APP_PORT	49149
+#define MCAST_APP_PORT	0x2222
 
 int main(int argc, char *argv[]) {
     WORD wVersionRequested;

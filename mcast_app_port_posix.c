@@ -6,7 +6,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 
-#define MCAST_APP_PORT	49149
+#define MCAST_APP_PORT	0x2222
 
 #define min(a, b) ((a) < (b) ? (a) : (b))
 #define SOCKET_ERROR -1

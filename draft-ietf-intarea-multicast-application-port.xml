@@ -83,27 +83,27 @@
     </section>
 
     <section title="Assignment">
-      <t>This document REQUESTS assignment of UDP port 49149 and gives it the service name "mcast-app-port". This port is near the end of the range of User ports <xref target="RFC6335" sectionFormat="comma" section="6"/> to differentiate it from other port assignments.</t>
+      <t>This document <em>requests</em> assignment of UDP port 8738 (0x2222) and gives it the service name "mcast-app-port".</t>
 
-      <t>The REQUESTED port may be used as a source port if the application exclusively uses multicast messages. If any application messages are unicast, then a dynamic port should be used as the source port. This allows receivers to know which port to send replies to.</t>
+      <t>The <em>requested</em> port may be used as a source port if the application exclusively uses multicast messages. If any application messages are unicast, then a dynamic port should be used as the source port. This allows receivers to know which port to send replies to.</t>
     </section>
 
     <section title="Host Requirements" anchor="host">
-      <t>Hosts shall require applications using this port to use it non-exclusively. In practice, this means hosts using POSIX-like socket APIs would require applications to set the <tt>SO_REUSEADDR</tt> and/or <tt>SO_REUSEPORT</tt> socket options before binding the socket <xref target="POSIX"/>. This ensures that applications developed on a conformant host will also work on a non-conformant host.</t>
+      <t>Hosts SHALL require applications using this port to use it non-exclusively. In practice, this means hosts using POSIX-like socket APIs would require applications to set the <tt>SO_REUSEADDR</tt> and/or <tt>SO_REUSEPORT</tt> socket options before binding the socket <xref target="POSIX"/>. This ensures that applications developed on a conformant host will also work on a non-conformant host.</t>
 
-      <t>Hosts shall prevent use of the port with the wildcard address (see <xref target="RFC3493" sectionFormat="comma" section="3.8"/>).</t>
+      <t>Hosts SHALL prevent use of the port with the wildcard address (see <xref target="RFC3493" sectionFormat="comma" section="3.8"/>).</t>
 
-      <t>Hosts shall prevent applications from sending non-multicast packets to this destination port.</t>
+      <t>Hosts SHALL prevent applications from sending non-multicast packets to this destination port.</t>
 
-      <t>Hosts shall discard all incoming, non-multicast packets that use this destination port.</t>
+      <t>Hosts SHALL discard all incoming, non-multicast packets that use this destination port.</t>
     </section>
 
     <section title="Application Requirements" anchor="application">
       <t>Applications running on non-conformant hosts can ensure compatibility with conformant hosts by meeting the requirements in this section.</t>
 
-      <t>Applications running on a non-conformant host shall not prevent other applications from using this port. In practice, this means that applications using POSIX-like socket APIs would enable the <tt>SO_REUSEADDR</tt> and/or <tt>SO_REUSEPORT</tt> socket options before binding the socket <xref target="POSIX"/>.</t>
+      <t>Applications running on a non-conformant host SHALL NOT prevent other applications from using this port. In practice, this means that applications using POSIX-like socket APIs would enable the <tt>SO_REUSEADDR</tt> and/or <tt>SO_REUSEPORT</tt> socket options before binding the socket <xref target="POSIX"/>.</t>
 
-      <t>Applications running on a non-conformant host shall discard all datagrams that do not have the multicast address used by the application.</t>
+      <t>Applications running on a non-conformant host SHALL discard all datagrams that do not have the multicast address used by the application.</t>
     </section>
 
     <section title="Security Considerations">
@@ -113,7 +113,7 @@
     </section>
 
     <section title="IANA Considerations">
-      <t>IANA is REQUESTED to assign the following port:</t>
+      <t>IANA is <em>requested</em> to assign the following port:</t>
 
       <artwork><![CDATA[
 Service Name        mcast-app-port
@@ -122,7 +122,7 @@ Assignee            IESG <iesg@ietf.org>
 Contact             IETF Chair <chair@ietf.org>
 Description         Multicast Application Port
 Reference           This document
-Port Number         49149]]>
+Port Number         8738]]>
       </artwork>
 
       <t>IANA is requested to update its "Application for Service Names and User Port Numbers" <xref target="IANA-APP"/> to reference this document, ask if the Multicast Application Port may be used, and require an explanation if not. This document does not prohibit future port assignments for multicast applications; the review team still has discretion to approve requests on a case-by-case basis.</t>
@@ -131,7 +131,13 @@ Port Number         49149]]>
     <section title="Acknowledgement">
       <t>Special thanks to the National Marine Electronics Association for their contributions in developing marine industry standards and their support for this research.</t>
 
-      <t>Thanks also to the members of the PIM and INT-AREA working groups for their review of this draft, to Lorenzo Colitti for his suggestions for host requirements, and to Dr. Joe Touch for consulting on port assignment.</t>
+      <t>The authors are grateful to the members of the PIM and INT-AREA working groups for their review of this draft, and to the following individuals specifically:</t>
+      
+      <ul>
+        <li>Dr. Joe Touch for consulting on port assignment</li>
+        <li>Lorenzo Colitti for his suggestions for host requirements</li>
+        <li>David Schinazi for pointing out likely port conflicts with several major OSes</li>
+      </ul>
     </section>
   </middle>
 
@@ -160,7 +166,6 @@ Port Number         49149]]>
       </reference>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.1122.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3493.xml"/>
-      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6335.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7605.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9119.xml"/>
     </references>
