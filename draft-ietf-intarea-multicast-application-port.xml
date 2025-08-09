@@ -59,7 +59,7 @@
     <date day="20" month="July" year="2025"/>
 
     <abstract>
-      <t>This document discusses the drawbacks of the current practice of assigning a UDP port to each multicast application. Such assignments are redundant because the multicast address already uniquely identifies the data. The document proposes assigning a UDP port specifically for use with multicast applications and lists requirements for using this port.</t>
+      <t>This document discusses the drawbacks of the current practice of assigning a UDP port to each multicast application. Such assignments are redundant because the multicast address already uniquely identifies the data. The document proposes assigning a UDP port specifically for use with multicast applications and lists requirements for using this port. This method does not require modification to existing protocol stacks, though recommended updates to make the port easier to use are included.</t>
     </abstract>
   </front>
 
@@ -70,6 +70,8 @@
       <t>In the TCP/IP model, the port number in the transport layer multiplexes applications within a host (see <xref target="RFC1122" sectionFormat="comma" section="4.1.1"/> and <xref target="RFC7605" sectionFormat="comma" section="5"/>). With Any-Source Multicast, the use of a port number to multiplex applications is unnecessary because the destination multicast address already provides a unique identifier for the application. The same applies to Source-Specific Multicast if both source address and destination multicast address are considered.</t>
 
       <t>Because of the desire to conserve port numbers and the fact that a port is not necessary to multiplex multicast applications, this document assigns a UDP port that may be used with multicast applications: the Multicast Application Port.</t>
+
+      <t>Assigning a UDP port for multicast applications (as opposed to other methods) provides immediate compatibility with existing network protocol stacks. <xref target="host"/> contains requirements that facilitate use of the port on a given platform, but incorporating these requirements into existing platforms is expected to be a gradual process.</t>
 
       <t>Use of this port is optional because there may be circumstances where assigning a port is preferred, such as when participants cannot meet the requirements in <xref target="host"/> and <xref target="application"/>.</t>
 
