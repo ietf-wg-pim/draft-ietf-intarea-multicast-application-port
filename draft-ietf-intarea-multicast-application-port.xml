@@ -91,9 +91,9 @@
     <section title="Host Requirements" anchor="host">
       <t>Hosts SHALL require applications using this port to use it non-exclusively. In practice, this means hosts using POSIX-like socket APIs would require applications to set the <tt>SO_REUSEADDR</tt> and/or <tt>SO_REUSEPORT</tt> socket options before binding the socket <xref target="POSIX"/>. This ensures that applications developed on a conformant host will also work on a non-conformant host.</t>
 
-      <t>Hosts SHALL prevent use of the port with the wildcard address (see <xref target="RFC3493" sectionFormat="comma" section="3.8"/>).</t>
+      <t>Hosts SHALL prevent use of the port with the wildcard address (see <xref target="RFC3493" sectionFormat="comma" section="3.8"/>) by having the socket bind operation return an error code.</t>
 
-      <t>Hosts SHALL prevent applications from sending non-multicast packets to this destination port.</t>
+      <t>Hosts SHALL prevent applications from sending non-multicast packets to this destination port by having the send operation return an error code.</t>
 
       <t>Hosts SHALL discard all incoming, non-multicast packets that use this destination port.</t>
     </section>
