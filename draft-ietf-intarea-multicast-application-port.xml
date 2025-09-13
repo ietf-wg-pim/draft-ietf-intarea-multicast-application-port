@@ -85,7 +85,9 @@
     <section title="Assignment">
       <t>This document <em>requests</em> assignment of UDP port 8738 (0x2222) and gives it the service name "mcast-app-port".</t>
 
-      <t>The <em>requested</em> port may be used as a source port if the application exclusively uses multicast messages. If any application messages are unicast, then a dynamic port should be used as the source port. This allows receivers to know which port to send replies to.</t>
+      <t>The <em>requested</em> port may be used as a source port if the application exclusively uses multicast messages.</t>
+
+      <t>If any application messages are unicast, then a different port should be used for the source port. This allows receivers to know which port to send replies to. Such arrangements would likely require multiple sockets, as the application would need to bind to multiple ports.</t>
     </section>
 
     <section title="Host Requirements" anchor="host">
@@ -137,6 +139,7 @@ Port Number         8738]]>
         <li>Dr. Joe Touch for consulting on port assignment</li>
         <li>Lorenzo Colitti for his suggestions for host requirements</li>
         <li>David Schinazi for pointing out likely port conflicts with several major OSes</li>
+        <li>Dave Thaler and Juliusz Chroboczek for suggestions on the source port used for unicast</li>
       </ul>
     </section>
   </middle>
