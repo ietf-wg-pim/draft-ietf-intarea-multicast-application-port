@@ -87,7 +87,7 @@
 
       <t>The <em>requested</em> port may be used as a source port if the application exclusively uses multicast messages.</t>
 
-      <t>If any application messages are unicast, then a different port should be used for the source port. This allows receivers to know which port to send replies to. Such arrangements would likely require multiple sockets, as the application would need to bind to multiple ports.</t>
+      <t>If any application messages are unicast, then a different port should be used for the source port. This allows receivers to know which port to send replies to. Such arrangements would likely require receivers to use multiple sockets, as the application would need to bind to multiple ports.</t>
     </section>
 
     <section title="Host Requirements" anchor="host">
