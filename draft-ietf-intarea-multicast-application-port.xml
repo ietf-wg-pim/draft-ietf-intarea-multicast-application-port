@@ -85,7 +85,7 @@
     <section title="Assignment">
       <t>This document <em>requests</em> assignment of UDP port 8738 (0x2222) and gives it the service name "mcast-app-port".</t>
 
-      <t>The <em>requested</em> port may be used as a source port if the application exclusively uses multicast messages.</t>
+      <t>The Multicast Application Port SHALL NOT be used as a destination port for any non-multicast messages. It MAY be used as a source port by an application that exclusively uses multicast messages.</t>
 
       <t>If any application messages are unicast, then a different port should be used for the source port. This allows receivers to know which port to send replies to. Such arrangements would likely require receivers to use multiple sockets, as the application would need to bind to multiple ports.</t>
     </section>
@@ -98,6 +98,18 @@
       <t>Hosts SHALL prevent applications from sending non-multicast packets to this destination port by having the send operation return an error code.</t>
 
       <t>Hosts SHALL discard all incoming, non-multicast packets that use this destination port.</t>
+
+      <section title="Host Firewall Considerations">
+        <t>Certain host firewalls are designed to accept incoming messages as long as there was first an outgoing message using the same set of ports. Consider the following sequence of messages:</t>
+
+        <ol>
+          <li>(Multicast) Host A to group containing Host B</li>
+          <li>(Unicast) Host B to Host A</li>
+          <li>(Unicast) Host A to Host B</li>
+        </ol>
+
+        <t>The host firewall on Host A may block Message 2 because it uses a different set of ports than Message 1 uses. Implementers should be aware of this possibility and configure the host firewall appropriately.</t>
+      </section>
     </section>
 
     <section title="Application Requirements" anchor="application">
