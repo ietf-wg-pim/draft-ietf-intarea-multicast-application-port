@@ -73,7 +73,7 @@
 
       <t>Assigning a UDP port for multicast applications (as opposed to other methods) provides immediate compatibility with existing network protocol stacks. <xref target="host"/> contains requirements that facilitate use of the port on a given platform, but incorporating these requirements into existing platforms is expected to be a gradual process.</t>
 
-      <t>Use of this port is optional because there may be circumstances where assigning a port is preferred, such as when participants cannot meet the requirements in <xref target="host"/> and <xref target="application"/>.</t>
+      <t>Use of this port is optional because there may be circumstances where assigning a port is preferred, such as when participants cannot meet the requirements in <xref target="host"/> and <xref target="application"/>, or when a firewall blocks a traffic pattern used by the application (see <xref target="firewall"/>).</t>
 
       <t>An application may use this port in conjunction with a unicast port to balance out deficiencies related to multicast distribution (see <xref target="RFC9119"/>, for example).</t>
 
@@ -99,16 +99,16 @@
 
       <t>Hosts SHALL discard all incoming, non-multicast packets that use this destination port.</t>
 
-      <section title="Host Firewall Considerations">
+      <section title="Host Firewall Considerations" anchor="firewall">
         <t>Certain host firewalls are designed to accept incoming messages as long as there was first an outgoing message using the same set of ports. Consider the following sequence of messages:</t>
 
         <ol>
-          <li>(Multicast) Host A to group containing Host B</li>
-          <li>(Unicast) Host B to Host A</li>
-          <li>(Unicast) Host A to Host B</li>
+          <li>(Multicast) Host A to group containing Host B<br />Source Port: 50000 (Dynamic)<br />Dest Port: 8738</li>
+          <li>(Unicast) Host B to Host A<br />Source Port: 60000 (Dynamic)<br />Dest Port: 50000</li>
+          <li>(Unicast) Host A to Host B<br />Source Port: 50000<br />Dest Port: 60000</li>
         </ol>
 
-        <t>The host firewall on Host A may block Message 2 because it uses a different set of ports than Message 1 uses. Implementers should be aware of this possibility and configure the host firewall appropriately.</t>
+        <t>The host firewall on Host A may block Message 2 because it uses a different set of ports than Message 1 uses. Host firewalls SHOULD be designed to allow this sequence of messages, but MAY filter traffic based on the multicast address used in Message 1, which identifies the application.</t>
       </section>
     </section>
 
