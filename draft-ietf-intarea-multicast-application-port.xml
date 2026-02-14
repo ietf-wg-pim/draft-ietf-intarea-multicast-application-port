@@ -117,7 +117,7 @@
 
       <t>Applications running on a non-conformant host SHALL NOT prevent other applications from using this port. In practice, this means that applications using POSIX-like socket APIs would enable the <tt>SO_REUSEADDR</tt> and/or <tt>SO_REUSEPORT</tt> socket options before binding the socket <xref target="POSIX"/>.</t>
 
-      <t>Applications running on a non-conformant host SHALL discard all datagrams that do not have the multicast address used by the application.</t>
+      <t>Applications running on a non-conformant host SHALL discard all datagrams received on the Multicast Application Port that do not have the multicast address used by the application.</t>
     </section>
 
     <section title="Security Considerations">
