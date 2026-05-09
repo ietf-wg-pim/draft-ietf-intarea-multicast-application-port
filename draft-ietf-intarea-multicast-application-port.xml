@@ -109,7 +109,7 @@
     </section>
 
     <section title="Firewall Considerations" anchor="firewall">
-      <t>Certain host firewalls are designed to accept incoming messages as long as there was first an outgoing message using the same set of ports (see <xref target="RFC7288"/> for more discussion). Consider the following sequence of messages:</t>
+      <t>Many network firewalls (which operate on network infrastructure) and host firewalls (which operate on individual hosts) are configured to accept incoming messages as long as there was first an outgoing message using the same set of ports (see <xref target="RFC7288"/> for more discussion). Consider the following sequence of messages:</t>
 
       <ol>
         <li>(Multicast) Host A to group containing Host B<br />Source Port: 50000 (Dynamic)<br />Dest Port: 8738</li>
@@ -117,7 +117,13 @@
         <li>(Unicast) Host A to Host B<br />Source Port: 50000<br />Dest Port: 60000</li>
       </ol>
 
-      <t>The host firewall on Host A may block Message 2 because it uses a different set of ports than Message 1 uses. Host firewalls SHOULD be designed to allow this sequence of messages, but MAY filter traffic based on the multicast address used in Message 1, which identifies the application.</t>
+      <t>A host firewall running on Host A (or a network firewall between Host A and Host B) may block Message 2 because it uses a different set of ports than Message 1 uses.</t>
+
+      <t>While a firewall could be configured to accept Message 2, this configuration would have to be automated because the use of dynamic ports makes manual configuration too costly even in small deployments. However, this automation leads to unacceptable security risks. For example, if a firewall were to respond to Message 1 by opening up the source port used in the message, a malicious application running on the host could open large holes in the firewall by repeatedly sending variations of Message 1 using different source ports.</t>
+
+      <t>Host firewalls could be configured to allow messages associated with a given application (instead of specific ports), but this approach would not work with a network firewall.</t>
+
+      <t>Ultimately, the current practice of assigning a multicast application its own port is more practical for any application that uses both multicast and unicast messages and could be deployed in an environment using firewalls. Firewall configuration with an assigned port is straightforward: allow all messages using that port.</t>
     </section>
 
     <section title="Security Considerations">
@@ -141,7 +147,7 @@ Reference           This document
 Port Number         8738]]>
       </artwork>
 
-      <t>IANA is requested to update its "Application for Service Names and User Port Numbers" <xref target="IANA-APP"/> to reference this document, ask if the Multicast Application Port may be used, and require an explanation if not. This document does not prohibit future port assignments for multicast applications; the review team still has discretion to approve requests on a case-by-case basis.</t>
+      <t>IANA is requested to update its "Application for Service Names and User Port Numbers" <xref target="IANA-APP"/> to reference this document and ask if the Multicast Application Port may be used.</t>
     </section>
 
     <section title="Acknowledgement">
@@ -154,7 +160,7 @@ Port Number         8738]]>
         <li>Lorenzo Colitti for his suggestions for host requirements</li>
         <li>David Schinazi for pointing out likely port conflicts with several major OSes</li>
         <li>Juliusz Chroboczek for suggestions on the source port used for unicast</li>
-        <li>Dave Thaler for suggestions related to host firewalls</li>
+        <li>Dave Thaler for insightful discussion on how the Multicast Application Port would operate in the presence of a firewall</li>
       </ul>
     </section>
   </middle>
