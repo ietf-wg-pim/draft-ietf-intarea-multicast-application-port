@@ -16,7 +16,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="std"
-  docName="draft-ietf-intarea-multicast-application-port-04"
+  docName="draft-ietf-intarea-multicast-application-port-05"
   ipr="trust200902"
   submissionType="IETF"
   consensus="true">
@@ -56,7 +56,7 @@
       </address>
     </author>
 
-    <date day="14" month="February" year="2026"/>
+    <date day="12" month="May" year="2026"/>
 
     <abstract>
       <t>This document discusses the drawbacks of the current practice of assigning a UDP port to each multicast application. Such assignments are redundant because the multicast address already uniquely identifies the data. The document proposes assigning a UDP port specifically for use with multicast applications and lists requirements for using this port. This approach provides immediate compatibility with existing protocol stacks, while also requiring improvements to make the port easier to use.</t>
