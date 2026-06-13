@@ -87,8 +87,8 @@
     <section title="Assignment">
       <t>This document <em>requests</em> assignment of UDP port 8738 (0x2222) and gives it the service name "mcast-app-port".</t>
 
-      <t>Applications using the Multicast Application Port are identified by the destination multicast address (ASM) or by the combination of source unicast address and destination multicast address (SSM). As such, the Multicast Application Port SHALL NOT be used as either a source port or destination port for any non-multicast messages.</t> 
-      
+      <t>Applications using the Multicast Application Port are identified by the destination multicast address (ASM) or by the combination of source unicast address and destination multicast address (SSM). As such, the Multicast Application Port MUST NOT be used as either a source port or destination port for any non-multicast messages.</t>
+
       <t>The Multicast Application Port MAY be used as a source port by an application that exclusively uses multicast messages.</t>
 
       <t>If any application messages are unicast, then it is RECOMMENDED that the source port used for multicast messages be set to the port that receivers can send unicast replies to. Note that such arrangements would likely require receivers to use multiple sockets, as the application would need to bind to multiple ports.</t>
