@@ -73,6 +73,8 @@
 
       <t>Assigning a UDP port for multicast applications (as opposed to other methods) provides immediate compatibility with existing network protocol stacks. <xref target="host"/> contains requirements that facilitate use of the port on a given platform, but incorporating these requirements into existing platforms is expected to be a gradual process.</t>
 
+      <t>The Multicast Application Port can be used with both IPv6 and IPv4.</t>
+
       <t>Use of this port is optional because there may be circumstances where assigning a port is preferred, such as when participants cannot meet the requirements in <xref target="host"/> and <xref target="application"/>, or when a firewall blocks a traffic pattern used by the application (see <xref target="firewall"/>).</t>
 
       <t>An application sending multicast messages using the Multicast Application Port as the destination port MAY also send unicast messages using a different destination port. One possible benefit of doing so is to balance out deficiencies related to multicast distribution (see <xref target="RFC9119"/>, for example).</t>
