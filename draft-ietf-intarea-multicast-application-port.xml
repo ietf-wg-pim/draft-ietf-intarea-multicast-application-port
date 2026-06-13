@@ -75,7 +75,7 @@
 
       <t>Use of this port is optional because there may be circumstances where assigning a port is preferred, such as when participants cannot meet the requirements in <xref target="host"/> and <xref target="application"/>, or when a firewall blocks a traffic pattern used by the application (see <xref target="firewall"/>).</t>
 
-      <t>An application MAY use this port in conjunction with a unicast port. One possible benefit of doing so is to balance out deficiencies related to multicast distribution (see <xref target="RFC9119"/>, for example).</t>
+      <t>An application sending multicast messages using the Multicast Application Port as the destination port MAY also send unicast messages using a different destination port. One possible benefit of doing so is to balance out deficiencies related to multicast distribution (see <xref target="RFC9119"/>, for example).</t>
 
       <section title="Requirements Language" anchor="requirements">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when, and only when, they appear in all capitals, as shown here.</t>
