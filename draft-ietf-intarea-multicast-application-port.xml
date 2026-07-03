@@ -71,7 +71,7 @@
 
       <t>Because of the desire to conserve port numbers and the fact that a port is not necessary to multiplex multicast applications, this document assigns a UDP port that may be used with multicast applications: the Multicast Application Port.</t>
 
-      <t>Assigning a UDP port for multicast applications (as opposed to other methods) provides immediate compatibility with existing network protocol stacks. <xref target="host"/> contains requirements that facilitate use of the port on a given platform, but incorporating these requirements into existing platforms is expected to be a gradual process.</t>
+      <t>Assigning a UDP port for multicast applications (as opposed to other methods) provides immediate compatibility with existing network protocol stacks and socket APIs. <xref target="host"/> contains requirements that facilitate use of the port on a given platform, but incorporating these requirements into existing platforms is expected to be a gradual process.</t>
 
       <t>The Multicast Application Port can be used with both IPv6 and IPv4.</t>
 
