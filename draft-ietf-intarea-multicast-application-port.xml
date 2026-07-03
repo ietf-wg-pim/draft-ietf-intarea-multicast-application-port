@@ -85,7 +85,7 @@
     </section>
 
     <section title="Assignment">
-      <t>This document <em>requests</em> assignment of UDP port 8738 (0x2222) and gives it the service name "mcast-app-port".</t>
+      <t>This document <em>requests</em> assignment of UDP port 8738 (0x2222) and gives it the service name "multicast-app".</t>
 
       <t>Applications using the Multicast Application Port are identified by the destination multicast address (ASM) or by the combination of source unicast address and destination multicast address (SSM). As such, the Multicast Application Port MUST NOT be used as either a source port or destination port for any non-multicast messages.</t>
 
@@ -142,7 +142,7 @@
       <t>IANA is <em>requested</em> to assign the following port:</t>
 
       <artwork><![CDATA[
-Service Name        mcast-app-port
+Service Name        multicast-app
 Transport Protocol  UDP
 Assignee            IESG <iesg@ietf.org>
 Contact             IETF Chair <chair@ietf.org>
