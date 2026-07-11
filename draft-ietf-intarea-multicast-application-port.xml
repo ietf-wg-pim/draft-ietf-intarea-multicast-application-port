@@ -141,7 +141,7 @@
     </section>
 
     <section title="Security Considerations">
-      <t>Firewall rules referencing ports are typically intended to match specific applications. Because applications using the Multicast Application Port are identified by both port and destination multicast address, rules referencing the Multicast Application Port SHOULD also consider the destination multicast address. A firewall rule that references the Multicast Application Port without also considering the destination multicast address would match all applications using the Multicast Application Port, which is too broadly-scoped.</t>
+      <t>Firewall rules referencing ports are typically intended to match specific applications for filtering and QoS. Because applications using the Multicast Application Port are identified by both port and destination multicast address, rules referencing the Multicast Application Port SHOULD also consider the destination multicast address. A firewall rule that references the Multicast Application Port without also considering the destination multicast address would match all applications using the Multicast Application Port, which is too broadly-scoped.</t>
 
       <t>Applications running on non-conformant hosts are vulnerable to a denial of service attack if another application claims exclusive access to the port.</t>
 
