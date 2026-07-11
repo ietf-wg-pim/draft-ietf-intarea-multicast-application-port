@@ -113,7 +113,7 @@
     </section>
 
     <section title="Firewall Considerations" anchor="firewall">
-      <t>Many network firewalls (which operate on network infrastructure) and host firewalls (which operate on individual hosts) are configured to accept incoming messages as long as there was first an outgoing message using the same set of ports (see <xref target="RFC7288"/> for more discussion). Consider the following sequence of messages:</t>
+      <t>Many network firewalls, which operate on network infrastructure, and host firewalls, which operate on individual hosts, are configured to accept incoming messages as long as there was first an outgoing message using the same set of ports (see <xref target="RFC7288"/> for more discussion). Consider the following sequence of messages:</t>
 
       <ol>
         <li>(Multicast) Host A to group containing Host B<br />Source Port: 50000 (Dynamic)<br />Dest Port: 8738</li>
