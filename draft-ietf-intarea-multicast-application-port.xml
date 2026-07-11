@@ -130,6 +130,16 @@
       <t>Ultimately, the current practice of assigning a multicast application its own port is more practical for any application that uses both multicast and unicast messages and could be deployed in an environment using firewalls. Firewall configuration with an assigned port is straightforward: allow all messages using that port.</t>
     </section>
 
+    <section title="Implementation Status">
+      <t>Note to RFC Editor: please remove this entire section before publication, as well as the reference to <xref target="RFC7942"/>.</t>
+
+      <t>This section records the status of known implementations of the protocol defined by this specification at the time of posting of this Internet-Draft, and is based on a proposal described in <xref target="RFC7942"/>.  The description of implementations in this section is intended to assist the IETF in its decision processes in progressing drafts to RFCs.  Please note that the listing of any individual implementation here does not imply endorsement by the IETF.  Furthermore, no effort has been spent to verify the information presented here that was supplied by IETF contributors. This is not intended as, and must not be construed to be, a catalog of available implementations or their features.  Readers are advised to note that other implementations may exist.</t>
+
+      <t>According to <xref target="RFC7942"/>, "this will allow reviewers and working groups to assign due consideration to documents that have the benefit of running code, which may serve as evidence of valuable experimentation and feedback that have made the implemented protocols more mature.  It is up to the individual working groups to use this information as they see fit".</t>
+
+      <t>Prototypes for Linux, macOS, and Windows are available at <eref target="https://github.com/ietf-wg-pim/draft-ietf-intarea-multicast-application-port/" brackets="angle"/>. These programs configure a socket to receive messages sent to the Multicast Application Port using a specified multicast address. Another program, such as <tt>socat</tt>, can be used to send messages and demonstrate, with an unmodified operating system, that the prototype will 1) display messages sent to the Multicast Application Port using the specified multicast address, and 2) <em>not</em> display messages sent to the Multicast Application Port, but using a different multicast address.</t>
+    </section>
+
     <section title="Security Considerations">
       <t>Firewall rules referencing ports are typically intended to match specific applications. Because applications using the Multicast Application Port are identified by both port and destination multicast address, rules referencing the Multicast Application Port SHOULD also consider the destination multicast address. A firewall rule that references the Multicast Application Port without also considering the destination multicast address would match all applications using the Multicast Application Port, which is too broadly-scoped.</t>
 
@@ -198,6 +208,7 @@ Port Number         8738]]>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4607.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7288.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7605.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7942.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9119.xml"/>
     </references>
   </back>
