@@ -67,7 +67,7 @@
     <section title="Introduction">
       <t>The Internet community has recognized the need to be judicious when assigning port numbers (see <xref target="RFC7605" sectionFormat="comma" section="6"/>). With unicast applications, the need for explicit port assignment has been reduced by techniques such as locally assigning a dynamic port, combined with some mechanism for advertising that port (see <xref target="RFC7605" sectionFormat="comma" section="7.1"/>). Dynamic assignment does not work with multicast applications because it is impossible to guarantee that the port remains unused by all hosts that may want to join a given multicast group. The result is that each multicast application-layer protocol has had to have its own dedicated port assignment. Even worse, each different use of that multicast application-layer protocol has had to have a different unique port assigned.</t>
 
-      <t>In the TCP/IP model, the port number in the transport layer multiplexes applications within a host (see <xref target="RFC1122" sectionFormat="comma" section="4.1.1"/> and <xref target="RFC7605" sectionFormat="comma" section="5"/>). With Any-Source Multicast (ASM; see <xref target="RFC1112"/> and <xref target="RFC4607"/>), the use of a port number to multiplex applications is unnecessary because the destination multicast address already provides a unique identifier for the application. The same applies to Source-Specific Multicast (SSM; see <xref target="RFC4607"/>) because of uniqueness when both source unicast address and destination multicast address are taken together.</t>
+      <t>In the TCP/IP model, the port number in the transport layer multiplexes applications within a host (see <xref target="RFC1122" sectionFormat="comma" section="4.1.1"/> and <xref target="RFC7605" sectionFormat="comma" section="5"/>). With Any-Source Multicast (ASM; see <xref target="RFC1112"/> and <xref target="RFC4607"/>), the use of a port number to multiplex applications is unnecessary because the destination multicast address already provides a unique identifier for the application. The same applies to Source-Specific Multicast (SSM; see <xref target="RFC4607"/>) due to the uniqueness of each (S,G) channel.</t>
 
       <t>Because of the desire to conserve port numbers and the fact that a port is not necessary to multiplex multicast applications, this document assigns a UDP port that may be used with multicast applications: the Multicast Application Port.</t>
 
@@ -87,7 +87,7 @@
     <section title="Assignment">
       <t>This document <em>requests</em> assignment of UDP port 8738 (0x2222) and gives it the service name "multicast-app".</t>
 
-      <t>Applications using the Multicast Application Port are identified by the destination multicast address (ASM) or by the combination of source unicast address and destination multicast address (SSM). As such, the Multicast Application Port MUST NOT be used as either a source port or destination port for any non-multicast messages.</t>
+      <t>ASM applications using the Multicast Application Port are identified by the destination multicast address. SSM applications using the Multicast Application Port are identified by their (S,G) channel, a combination of source unicast address and destination multicast address (see <xref target="RFC4607"/>). As such, the Multicast Application Port MUST NOT be used as either a source port or destination port for any non-multicast messages.</t>
 
       <t>The Multicast Application Port MAY be used as a source port by an application that exclusively uses multicast messages.</t>
 
@@ -109,7 +109,9 @@
 
       <t>Applications running on a non-conformant host SHALL NOT prevent other applications from using this port. In practice, this means that applications using POSIX-like socket APIs would enable the <tt>SO_REUSEADDR</tt> and/or <tt>SO_REUSEPORT</tt> socket options before binding the socket <xref target="POSIX"/>.</t>
 
-      <t>Applications running on a non-conformant host SHALL discard all datagrams received on the Multicast Application Port that do not have the multicast address used by the application.</t>
+      <t>ASM applications running on a non-conformant host SHALL discard all datagrams received on the Multicast Application Port that do not have the multicast address and interface used by the application.</t>
+
+      <t>SSM applications running on a non-conformant host SHALL discard all datagrams received on the Multicast Application Port that do not have the (S,G) channel and interface used by the application. See <xref target="RFC3678"/> for information about related socket APIs.</t>
     </section>
 
     <section title="Firewall Considerations" anchor="firewall">
@@ -141,7 +143,7 @@
     </section>
 
     <section title="Security Considerations">
-      <t>Firewall rules referencing ports are typically intended to match specific applications for filtering and QoS. Because applications using the Multicast Application Port are identified by both port and destination multicast address, rules referencing the Multicast Application Port SHOULD also consider the destination multicast address. A firewall rule that references the Multicast Application Port without also considering the destination multicast address would match all applications using the Multicast Application Port, which is too broadly-scoped.</t>
+      <t>Firewall rules referencing ports are typically intended to match specific applications for filtering and QoS. Because applications using the Multicast Application Port are identified by their destination multicast address (ASM) or (S,G) channel (SSM), then rules referencing the Multicast Application Port SHOULD also consider the applicable network layer address(es). A firewall rule that only references the Multicast Application Port would match all applications using that port, which is too broadly-scoped.</t>
 
       <t>Applications running on non-conformant hosts are vulnerable to a denial of service attack if another application claims exclusive access to the port.</t>
 
@@ -191,6 +193,7 @@ Port Number         8738]]>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.1112.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.1122.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3493.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3678.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4607.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7288.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7605.xml"/>
