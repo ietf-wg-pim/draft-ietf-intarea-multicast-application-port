@@ -95,7 +95,7 @@
     </section>
 
     <section title="Host Requirements" anchor="host">
-      <t>Hosts SHALL require applications using this port to use it non-exclusively. In practice, this means hosts using POSIX-like socket APIs would require applications to set the <tt>SO_REUSEADDR</tt> and/or <tt>SO_REUSEPORT</tt> socket options before binding the socket <xref target="POSIX"/>. This ensures that applications developed on a conformant host will also work on a non-conformant host.</t>
+      <t>Hosts SHALL require applications using this port to use it non-exclusively. On hosts using POSIX-like socket APIs (see <xref target="POSIX"/>), this is typically accomplished by enabling a socket option before binding the socket. Common socket options include <tt>SO_REUSEADDR</tt>, <tt>SO_REUSEPORT</tt>, and <tt>SO_REUSE_MULTICASTPORT</tt>, but each platform provides its own method. This requirement ensures that applications developed on a conformant host will also work on a non-conformant host.</t>
 
       <t>Hosts SHALL prevent use of the port with the wildcard address (see <xref target="RFC3493" sectionFormat="comma" section="3.8"/>) by having the socket bind operation return an error code.</t>
 
@@ -107,7 +107,7 @@
     <section title="Application Requirements" anchor="application">
       <t>Applications running on non-conformant hosts can ensure compatibility with conformant hosts by meeting the requirements in this section.</t>
 
-      <t>Applications running on a non-conformant host SHALL NOT prevent other applications from using this port. In practice, this means that applications using POSIX-like socket APIs would enable the <tt>SO_REUSEADDR</tt> and/or <tt>SO_REUSEPORT</tt> socket options before binding the socket <xref target="POSIX"/>.</t>
+      <t>Applications running on a non-conformant host SHALL NOT prevent other applications from using this port. On hosts using POSIX-like socket APIs (see <xref target="POSIX"/>), this is typically accomplished by enabling a socket option before binding the socket. Common socket options include <tt>SO_REUSEADDR</tt>, <tt>SO_REUSEPORT</tt>, and <tt>SO_REUSE_MULTICASTPORT</tt>, but each platform provides its own method.</t>
 
       <t>ASM applications running on a non-conformant host SHALL discard all datagrams received on the Multicast Application Port that do not have the multicast address and interface used by the application.</t>
 
