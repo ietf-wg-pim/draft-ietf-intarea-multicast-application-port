@@ -163,20 +163,6 @@ Port Number         8738]]>
 
       <t>IANA is requested to update its "Application for Service Names and User Port Numbers" <xref target="IANA-APP"/> to reference this document and ask the applicant if the Multicast Application Port may be used.</t>
     </section>
-
-    <section title="Acknowledgement">
-      <t>Special thanks to the National Marine Electronics Association for their contributions in developing marine industry standards and their support for this research.</t>
-
-      <t>The authors are grateful to the members of the PIM and INT-AREA working groups for their review of this draft, and to the following individuals specifically:</t>
-
-      <ul>
-        <li>Dr. Joe Touch for consulting on port assignment</li>
-        <li>Lorenzo Colitti for his suggestions for host requirements</li>
-        <li>David Schinazi for pointing out likely port conflicts with several major OSes</li>
-        <li>Juliusz Chroboczek for suggestions on the source port used for unicast</li>
-        <li>Dave Thaler for insightful discussion on how the Multicast Application Port would operate in the presence of a firewall</li>
-      </ul>
-    </section>
   </middle>
 
   <back>
@@ -211,5 +197,19 @@ Port Number         8738]]>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7942.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9119.xml"/>
     </references>
+
+    <section title="Acknowledgement">
+      <t>Special thanks to the National Marine Electronics Association for their contributions in developing marine industry standards and their support for this research.</t>
+
+      <t>The authors are grateful to the members of the PIM and INT-AREA working groups for their review of this draft, and to the following individuals specifically:</t>
+
+      <ul>
+        <li>Dr. Joe Touch for consulting on port assignment</li>
+        <li>Lorenzo Colitti for his suggestions for host requirements</li>
+        <li>David Schinazi for pointing out likely port conflicts with several major OSes</li>
+        <li>Juliusz Chroboczek for suggestions on the source port used for unicast</li>
+        <li>Dave Thaler for insightful discussion on how the Multicast Application Port would operate in the presence of a firewall</li>
+      </ul>
+    </section>
   </back>
 </rfc>
