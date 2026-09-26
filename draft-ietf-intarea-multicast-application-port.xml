@@ -163,7 +163,7 @@ Reference           This document
 Port Number         8738]]>
       </artwork>
 
-      <t>IANA is requested to update its "Application for Service Names and User Port Numbers" <xref target="IANA-APP"/> to reference this document and ask the applicant if the Multicast Application Port may be used.</t>
+      <t>IANA is requested to update its "Application for Service Names and User Port Numbers" <xref target="IANA-APP"/> to reference this document and ask the applicant if the Multicast Application Port may be used. These changes will help applicants understand that it may not be necessary to assign a port for their multicast protocol.</t>
     </section>
   </middle>
 
