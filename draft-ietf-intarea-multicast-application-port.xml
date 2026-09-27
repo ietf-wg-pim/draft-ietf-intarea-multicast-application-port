@@ -67,7 +67,7 @@
     <section title="Introduction">
       <t>The Internet community has recognized the need to be judicious when assigning port numbers (see <xref target="RFC7605" sectionFormat="comma" section="6"/>). With unicast applications, the need for explicit port assignment has been reduced by techniques such as locally assigning a dynamic port, combined with some mechanism for advertising that port (see <xref target="RFC7605" sectionFormat="comma" section="7.1"/>). Dynamic assignment does not work with multicast applications because it is impossible to guarantee that the port remains unused by all hosts that may want to join a given multicast group. The result is that each multicast application-layer protocol has had to have its own dedicated port assignment. Even worse, each different use of that multicast application-layer protocol has had to have a different unique port assigned.</t>
 
-      <t>In the TCP/IP model, the port number in the transport layer multiplexes applications within a host (see <xref target="RFC1122" sectionFormat="comma" section="4.1.1"/> and <xref target="RFC7605" sectionFormat="comma" section="5"/>). With Any-Source Multicast (ASM; see <xref target="RFC1112"/> and <xref target="RFC4607"/>), the use of a port number to multiplex applications is unnecessary because the destination multicast address already provides a unique identifier for the application. The same applies to Source-Specific Multicast (SSM; see <xref target="RFC4607"/>) due to the uniqueness of each (S,G) channel.</t>
+      <t>In the TCP/IP model, the port number in the transport layer multiplexes applications within a host (see <xref target="RFC1122" sectionFormat="comma" section="4.1.1"/> and <xref target="RFC7605" sectionFormat="comma" section="5"/>). With Any-Source Multicast (ASM; see <xref target="RFC1112"/> and <xref target="RFC4607"/>), the use of a port number to multiplex applications is unnecessary because the destination multicast address already provides a unique identifier for the application within a given multicast scope. The same applies to Source-Specific Multicast (SSM; see <xref target="RFC4607"/>) due to the uniqueness of each (S,G) channel within a given multicast scope.</t>
 
       <t>Because of the desire to conserve port numbers and the fact that a port is not necessary to multiplex multicast applications, this document assigns a UDP port that may be used with multicast applications: the Multicast Application Port.</t>
 
@@ -78,6 +78,15 @@
       <t>Use of this port is optional because there may be circumstances where assigning a port is preferred, such as when participants cannot meet the requirements in <xref target="host"/> and <xref target="application"/>, or when a firewall blocks a traffic pattern used by the application (see <xref target="firewall"/>).</t>
 
       <t>An application sending multicast messages using the Multicast Application Port as the destination port MAY also send unicast messages using a different destination port. One possible benefit of doing so is to balance out deficiencies related to multicast distribution (see <xref target="RFC9119"/>, for example).</t>
+
+      <section title="Multicast Address Assignment">
+        <t>The ability to identify an ASM application by its destination multicast address assumes that a unique multicast address has been assigned to the application. These assignments are outside the scope of this document. Additional information can be obtained from <xref target="RFC6308"/> and the following IANA registry groups:</t>
+
+        <ul>
+          <li>IPv4 Multicast Address Space</li>
+          <li>IPv6 Multicast Address Space</li>
+        </ul>
+      </section>
     </section>
 
     <section title="Terminology">
@@ -195,6 +204,7 @@ Port Number         8738]]>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3493.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3678.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4607.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6308.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7288.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7605.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7942.xml"/>
