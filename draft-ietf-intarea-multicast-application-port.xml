@@ -272,7 +272,12 @@
 
       <t>Applications running on a host that does not protect the Multicast
       Application Port from misuse are vulnerable to a denial of service
-      attack if another application claims exclusive access to the port.</t>
+      attack if another application claims exclusive access to the port.
+      This vulnerability is not unique to the Multicast Application Port.
+      Regardless of what port is used by a multicast application, a
+      malicious application could claim exclusive access to that port first,
+      and thereby prevent the legitimate application from being able to use
+      its port.</t>
 
       <t>Systems that use POSIX-like socket APIs typically have restrictions on binding multiple sockets to the same port. This can serve as a rudimentary security mechanism in that other local applications cannot eavesdrop on the multicast stream. A necessary side-effect of using the Multicast Application Port is that applications can no longer rely on these security mechanisms. These applications may want to incorporate additional security measures into their protocol. Note that the problem of local eavesdropping is typically no worse than eavesdropping in-flight, so it is likely that both attack vectors can be resolved by the same security measure.</t>
     </section>
