@@ -125,7 +125,7 @@
       protocol needs to have a different unique port assigned.</t>
 
       <t>Astute readers may observe that the previous statement
-      is not technically true.
+      is not strictly true.
       In the TCP/IP model, the port number in the transport
       layer multiplexes unicast traffic destined to different
       applications within a host
@@ -141,14 +141,14 @@
       run on the same host and share a single UDP port.
       This observation is the inspiration behind this specification.
       If multiple instantiations of the same application can share a
-      single port, then by the same logic, _all_ multicast applications
+      single port then, by the same logic, _all_ multicast applications
       can share a single port, as long as they cooperate
       and use the appropriate API mechanisms to share the port.
       This specification codifies this existing practice of sharing a port,
       and assigns a single UDP port that may be used by all
       multicast applications: the Multicast Application Port.</t>
 
-      <t>Multicast applications can can follow the guidance in this
+      <t>Multicast applications can follow the guidance in this
       specification immediately to use the Multicast Application Port
       on any platform that supports SO_REUSE_PORT or equivalent
       (<xref target="application"/>).
