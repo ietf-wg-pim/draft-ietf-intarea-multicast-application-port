@@ -219,7 +219,13 @@
       <tt>SO_REUSEPORT</tt>, and <tt>SO_REUSE_MULTICASTPORT</tt>,
       but each platform provides its own method.</t>
 
-      <t>Multicast applications SHALL discard all datagrams received
+      <t>Applications SHALL NOT send any non-multicast messages
+      using the Multicast Application Port
+      as either a source port or destination port.</t>
+
+      <t>Applications SHALL discard all non-multicast datagrams
+      received on the Multicast Application Port.
+      Furthermore, applications SHALL discard all datagrams received
       on the Multicast Application Port that are not addressed to
       the multicast group address and interface being used by that
       application instantiation.
@@ -227,7 +233,8 @@
     </section>
 
     <section title="Host Requirements" anchor="host">
-      <t>Hosts SHALL require applications using this port to use
+      <t>Hosts implementing this specification
+      SHALL require applications using this port to use
       it non-exclusively. On hosts using POSIX-like socket APIs
       <xref target="POSIX"/>, this is typically accomplished by
       enabling a socket option before binding the socket.
@@ -239,6 +246,22 @@
       ensures that such applications will also work correctly on
       older hosts that do not enforce the protections on the
       Multicast Application Port.</t>
+
+      <t>If the application fails to follow the correct steps to
+      share the Multicast Application Port, then the networking
+      API SHALL return an error code, throw an exception, or
+      otherwise fail the application’s attempt to bind to the
+      Multicast Application Port. This helps the application
+      programmer discover their mistake and correct it.
+      If the application fails to follow the correct steps then
+      the networking API MUST NOT try to be “helpful” by silently
+      correcting the misbehaving application and automatically
+      granting it shared access to the Multicast Application Port.
+      This would be counter to the intention of ensuring that a
+      properly written application will work both on a platform
+      that implements protection for the Multicast Application Port,
+      and on older systems that have not been updated to implement
+      these Multicast Application Port host requirements.</t>
 
       <t>Hosts SHALL prevent use of the port with the wildcard address (<xref target="RFC3493" sectionFormat="comma" section="3.8"/>) by having the socket bind operation return an error code.</t>
 
