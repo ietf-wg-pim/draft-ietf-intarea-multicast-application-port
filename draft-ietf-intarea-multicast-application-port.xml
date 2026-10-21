@@ -165,6 +165,14 @@
 
       <t>The Multicast Application Port can be used with both IPv6 and IPv4.</t>
 
+      <t>In effect, the Multicast Application Port becomes a
+      vestigial placeholder value, present only because the UDP
+      packet format requires a value in the destination port field.
+      At best it signifies merely that this traffic is multicast,
+      but even that information is redundant, since the fact
+      that the traffic is multicast can be inferred by observing
+      that the destination IP address is a multicast address.</t>
+
       <t>Use of this port is optional because there may be
       circumstances where assigning a port is preferred,
       such as when participants cannot meet the requirements in
