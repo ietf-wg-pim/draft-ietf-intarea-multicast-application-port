@@ -101,11 +101,12 @@
     multicast) if all the meetings were to use the same multicast group,
     and all copies of the application were to receive all the traffic
     for all videoconference meetings taking place at that time.
-    Consequently each instantiation of a multicast application
+    Consequently, each instantiation of a multicast application
     requires its own unique multicast group address.
     How these unique unique multicast group addresses are assigned for
-    each instantiation is the scope of other existing IETF protocols,
-    such as MADCAP <xref target="RFC2730"/>.</t>
+    each instantiation is the scope of other existing IETF documents,
+    such as <xref target="RFC5771"/>, <xref target="RFC3307"/>, and
+    <xref target="RFC10028"/>.</t>
     </section>
 
     <section title="Introduction">
@@ -364,15 +365,17 @@ Port Number         8738]]>
       </reference>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.1112.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.1122.xml"/>
-      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2730.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3307.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3493.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3678.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4607.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.5771.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6308.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7288.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7605.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7942.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9119.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.10028.xml"/>
     </references>
 
     <section title="Acknowledgement">
