@@ -92,7 +92,7 @@
     that need to receive these packets, while avoiding delivering the
     packets to hosts or networks that do not need to receive them.</t>
 
-    <t>This document describes a each separate usage of an
+    <t>This document describes each separate usage of an
     application as an "instantiation" of that application.
     For example, a multicast videoconferencing application
     may be in use all over the world for a thousand
@@ -136,14 +136,14 @@
       is unnecessary because the multicast group address already
       provides a unique identifier for each application instantiation
       within a given multicast scope.
-      Techniques like SO_REUSE_PORT (details vary depending on the
+      Techniques like <tt>SO_REUSEPORT</tt> (details vary depending on the
       specific network API) already exist and are already used to
       allow multiple copies of the same multicast application to
       run on the same host and share a single UDP port.
       This observation is the inspiration behind this specification.
       If multiple instantiations of the same application can share a
-      single port then, by the same logic, _all_ multicast applications
-      can share a single port, as long as they cooperate
+      single port, then, by the same logic, <em>all</em> multicast
+      applications can share a single port as long as they cooperate
       and use the appropriate API mechanisms to share the port.
       This specification codifies this existing practice of sharing a port,
       and assigns a single UDP port that may be used by all
@@ -151,12 +151,12 @@
 
       <t>Multicast applications can follow the guidance in this
       specification immediately to use the Multicast Application Port
-      on any platform that supports SO_REUSE_PORT or equivalent
+      on any platform that supports <tt>SO_REUSEPORT</tt> or equivalent
       (<xref target="application"/>).
       In addition, network protocol stacks and APIs can assist in the
       future development of such applications by enforcing special
-      rules to ensure correct use of the Multicast Application Port,
-      to help detect and prevent inadvertent application bugs that
+      rules to ensure correct use of the Multicast Application Port.
+      This helps detect and prevent inadvertent application bugs that
       would interfere with the correct sharing of this port
       (<xref target="host"/>).
       Deployment of these special protections is expected to
@@ -169,8 +169,8 @@
       <t>In effect, the Multicast Application Port becomes a
       vestigial placeholder value, present only because the UDP
       packet format requires a value in the destination port field.
-      At best it signifies merely that this traffic is multicast,
-      but even that information is redundant, since the fact
+      At best, it signifies merely that this traffic is multicast.
+      However, even that information is redundant, since the fact
       that the traffic is multicast can be inferred by observing
       that the destination IP address is a multicast address.</t>
 
