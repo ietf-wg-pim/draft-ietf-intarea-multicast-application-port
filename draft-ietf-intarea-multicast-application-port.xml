@@ -103,19 +103,22 @@
     for all videoconference meetings taking place at that time.
     Consequently, each instantiation of a multicast application
     requires its own unique multicast group address.
-    How these unique unique multicast group addresses are assigned for
+    How a unique multicast group addresses is assigned for
     each instantiation is the scope of other existing IETF documents,
-    such as <xref target="RFC5771"/>, <xref target="RFC3307"/>, and
-    <xref target="RFC10028"/>.</t>
+    such as the guidelines for IPv4 multicast address assignment
+    <xref target="RFC5771"/>
+    and for IPv6 multicast address assignment
+    <xref target="RFC3307"/><xref target="RFC10028"/>.</t>
     </section>
 
     <section title="Introduction">
-      <t>The Internet community has recognized the need
-      to be judicious when assigning port numbers
+      <t>The Internet community has recognized the need to be
+      judicious when assigning port numbers <xref target="RFC6335"/>
       (<xref target="RFC7605" sectionFormat="comma" section="6"/>).
       With unicast applications, the need for explicit port assignment
       has been reduced by techniques such as locally assigning a dynamic
       port, combined with some mechanism for advertising that port
+      <xref target="RFC6763"/>
       (<xref target="RFC7605" sectionFormat="comma" section="7.1"/>).
       Dynamic assignment does not work with multicast applications
       because it is impossible to guarantee that the port remains unused
@@ -153,6 +156,9 @@
       specification immediately to use the Multicast Application Port
       on any platform that supports <tt>SO_REUSEPORT</tt> or equivalent
       (<xref target="application"/>).
+      For example, this technique is widely used to run
+      multiple independent implementations of Multicast DNS
+      <xref target="RFC6762"/> on a single device.
       In addition, network protocol stacks and APIs can assist in the
       future development of such applications by enforcing special
       rules to ensure correct use of the Multicast Application Port.
@@ -188,7 +194,9 @@
         by its multicast group address assumes that a unique multicast
         group address has been assigned to the application instantiation.
         These assignments are outside the scope of this document.
-        Additional information can be obtained from <xref target="RFC6308"/>
+        Additional information can be obtained from
+        the overview of the Internet multicast addressing architecture
+        <xref target="RFC6308"/>
         and the following IANA registry groups:</t>
 
         <ul>
@@ -230,7 +238,9 @@
       on the Multicast Application Port that are not addressed to
       the multicast group address and interface being used by that
       application instantiation.
-      See <xref target="RFC3678"/> for information about related socket APIs.</t>
+      Related socket APIs are described in
+      “Socket Interface Extensions for Multicast Source Filters”
+      <xref target="RFC3678"/>.</t>
     </section>
 
     <section title="Host Requirements" anchor="host">
@@ -299,11 +309,32 @@
     </section>
 
     <section title="Implementation Status">
-      <t>Note to RFC Editor: please remove this entire section before publication, as well as the reference to <xref target="RFC7942"/>.</t>
+      <t>Note to RFC Editor: please remove this entire section
+      before publication, as well as the reference to RFC7942.</t>
 
-      <t>This section records the status of known implementations of the protocol defined by this specification at the time of posting of this Internet-Draft, and is based on a proposal described in <xref target="RFC7942"/>.  The description of implementations in this section is intended to assist the IETF in its decision processes in progressing drafts to RFCs.  Please note that the listing of any individual implementation here does not imply endorsement by the IETF.  Furthermore, no effort has been spent to verify the information presented here that was supplied by IETF contributors. This is not intended as, and must not be construed to be, a catalog of available implementations or their features.  Readers are advised to note that other implementations may exist.</t>
+      <t>This section records the status of known implementations
+      of the protocol defined by this specification at the
+      time of posting of this Internet-Draft, and is based on
+      the IETF's guidance on improving awareness of running code
+      <xref target="RFC7942"/>.
+      The description of implementations in this section is
+      intended to assist the IETF in its decision processes in
+      progressing drafts to RFCs.  Please note that the listing
+      of any individual implementation here does not imply
+      endorsement by the IETF.  Furthermore, no effort has been
+      spent to verify the information presented here that was
+      supplied by IETF contributors. This is not intended as, and
+      must not be construed to be, a catalog of available
+      implementations or their features.  Readers are advised
+      to note that other implementations may exist.</t>
 
-      <t>According to <xref target="RFC7942"/>, "this will allow reviewers and working groups to assign due consideration to documents that have the benefit of running code, which may serve as evidence of valuable experimentation and feedback that have made the implemented protocols more mature.  It is up to the individual working groups to use this information as they see fit".</t>
+      <t>According to that guidance, "this will allow reviewers
+      and working groups to assign due consideration to documents
+      that have the benefit of running code, which may serve
+      as evidence of valuable experimentation and feedback
+      that have made the implemented protocols more mature.
+      It is up to the individual working groups to use this
+      information as they see fit".</t>
 
       <t>Prototypes for Linux, macOS, and Windows are available at <eref target="https://github.com/ietf-wg-pim/draft-ietf-intarea-multicast-application-port/" brackets="angle"/>. These programs configure a socket to receive messages sent to the Multicast Application Port using a specified multicast address. Another program, such as <tt>socat</tt>, can be used to send messages and demonstrate, with an unmodified operating system, that the prototype will 1) display messages sent to the Multicast Application Port using the specified multicast address, and 2) <em>not</em> display messages sent to the Multicast Application Port, but using a different multicast address.</t>
     </section>
@@ -336,7 +367,12 @@ Reference           This document
 Port Number         8738]]>
       </artwork>
 
-      <t>IANA is requested to update its "Application for Service Names and User Port Numbers" <xref target="IANA-APP"/> to reference this document and ask the applicant if the Multicast Application Port may be used. These changes will help applicants understand that it may not be necessary to assign a port for their multicast protocol.</t>
+      <t>IANA is requested to update its "Application for Service
+      Names and User Port Numbers" <xref target="IANA-APP"/>
+      to reference this document and ask the applicant if the
+      Multicast Application Port may be used. These changes will
+      help applicants understand that it may not be necessary or
+      beneficial to assign a port for their multicast protocol.</t>
     </section>
   </middle>
 
@@ -371,6 +407,9 @@ Port Number         8738]]>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4607.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.5771.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6308.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6335.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6762.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6763.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7288.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7605.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7942.xml"/>
