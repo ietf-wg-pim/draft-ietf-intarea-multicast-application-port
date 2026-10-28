@@ -288,6 +288,19 @@
       the multicast group address to which it subscribed. However, it is
       advisable for efficiency, since it is wasteful to deliver packets to
       an application only to have that application promptly discard them.)</t>
+
+      <t>Some networking APIs provide a mechanism to allow
+      client software to disable generation and checking
+      of checksums for UDP packets
+      <xref target="RFC6935"/><xref target="RFC6936"/>
+      e.g., the Linux SO_NO_CHECK socket option.
+      Where networking APIs support disabling UDP checksums, this
+      MUST be implemented per endpoint (socket), as Linux does,
+      not as a systemwide default or per-port option.
+      With different multicast protocols sharing
+      UDP port 8738 (0x2222), the UDP port cannot
+      be used to identify a traffic flow to determine
+      what UDP checksum policy to apply.</t>
     </section>
 
     <section title="Firewall Considerations" anchor="firewall">
@@ -410,6 +423,8 @@ Port Number         8738]]>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6335.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6762.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6763.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6935.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6936.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7288.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7605.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7942.xml"/>
