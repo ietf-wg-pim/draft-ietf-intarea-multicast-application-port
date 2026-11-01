@@ -209,7 +209,13 @@
     <section title="Assignment">
       <t>This document <em>requests</em> assignment of UDP port 8738 (0x2222) and gives it the service name "multicast-app".</t>
 
-      <t>ASM applications using the Multicast Application Port are identified by the destination multicast address. SSM applications using the Multicast Application Port are identified by their (S,G) channel, a combination of source unicast address and destination multicast address <xref target="RFC4607"/>. As such, the Multicast Application Port MUST NOT be used as either a source port or destination port for any non-multicast messages.</t>
+      <t>ASM application instantiations using the Multicast Application
+      Port are identified by the destination multicast address.
+      SSM application instantiations using the Multicast Application Port
+      are identified by their (S,G) channel, a combination of source unicast
+      address and destination multicast address <xref target="RFC4607"/>.
+      As such, the Multicast Application Port MUST NOT be used as either a
+      source port or destination port for any non-multicast messages.</t>
 
       <t>The Multicast Application Port MAY be used as a source port by an application that exclusively uses multicast messages.</t>
 
@@ -220,7 +226,8 @@
       <t>Applications can use the Multicast Application Port
       by meeting the requirements in this section.</t>
 
-      <t>Applications SHALL NOT prevent other applications from using this port.
+      <t>Application instantiations SHALL NOT prevent other
+      application instantiations from using this port.
       On hosts using POSIX-like socket APIs <xref target="POSIX"/>,
       this is typically accomplished by enabling a socket option
       before binding the socket.
@@ -234,10 +241,10 @@
 
       <t>Applications SHALL discard all non-multicast datagrams
       received on the Multicast Application Port.
-      Furthermore, applications SHALL discard all datagrams received
-      on the Multicast Application Port that are not addressed to
-      the multicast group address and interface being used by that
-      application instantiation.
+      Furthermore, application instantiations SHALL discard all
+      datagrams received on the Multicast Application Port that
+      are not addressed to the multicast group address and
+      interface being used by that application instantiation.
       Related socket APIs are described in
       “Socket Interface Extensions for Multicast Source Filters”
       <xref target="RFC3678"/>.</t>
@@ -263,7 +270,7 @@
       API SHALL return an error code, throw an exception, or
       otherwise fail the application’s attempt to bind to the
       Multicast Application Port. This helps the application
-      programmer discover their mistake and correct it.
+      developer discover their mistake and correct it.
       If the application fails to follow the correct steps then
       the networking API MUST NOT try to be “helpful” by silently
       correcting the misbehaving application and automatically
@@ -287,7 +294,8 @@
       received on the Multicast Application Port that are not addressed to
       the multicast group address to which it subscribed. However, it is
       advisable for efficiency, since it is wasteful to deliver packets to
-      an application only to have that application promptly discard them.)</t>
+      an application instantiation only to have that application
+      instantiation promptly discard them.)</t>
 
       <t>Some networking APIs provide a mechanism to allow
       client software to disable generation and checking
@@ -316,9 +324,18 @@
 
       <t>While a firewall could be configured to accept Message 2, this configuration would have to be automated because the use of dynamic ports makes manual configuration too costly even in small deployments. However, this automation leads to unacceptable security risks. For example, if a firewall were to respond to Message 1 by opening up the source port used in the message, a malicious application running on the host could open large holes in the firewall by repeatedly sending variations of Message 1 using different source ports.</t>
 
-      <t>Host firewalls could be configured to allow messages associated with a given application (instead of specific ports), but this approach would not work with a network firewall.</t>
+      <t>Host firewalls could be configured to allow messages associated
+      with a given application instantiation (instead of specific ports),
+      but this approach would not work with a network firewall.</t>
 
-      <t>Ultimately, the current practice of assigning a multicast application its own port is more practical for any application that uses both multicast and unicast messages and could be deployed in an environment using firewalls. Firewall configuration with an assigned port is straightforward: allow all messages using that port.</t>
+      <t>Ultimately, the current practice of assigning each
+      multicast application its own port is more practical for any
+      application that uses both multicast and unicast messages
+      and could be deployed in an environment using firewalls.
+      Firewall configuration with an assigned port is
+      straightforward: allow all messages using that port.
+      Note that rogue applications can use the same port to
+      masquerade as the legitimate trusted application.</t>
     </section>
 
     <section title="Implementation Status">
@@ -353,16 +370,25 @@
     </section>
 
     <section title="Security Considerations">
-      <t>Firewall rules referencing ports are typically intended to match specific applications for filtering and QoS. Because applications using the Multicast Application Port are identified by their destination multicast address (ASM) or (S,G) channel (SSM), then rules referencing the Multicast Application Port SHOULD also consider the applicable network layer address(es). A firewall rule that only references the Multicast Application Port would match all applications using that port, which is too broadly-scoped.</t>
+      <t>Firewall rules referencing ports are typically intended
+      to match specific applications for filtering and QoS.
+      Because application instantiations using the Multicast
+      Application Port are identified by their destination
+      multicast address (ASM) or (S,G) channel (SSM), then rules
+      referencing the Multicast Application Port SHOULD also
+      consider the applicable network layer address(es).
+      A firewall rule that only references the Multicast
+      Application Port would match all applications using
+      that port, which is too broadly-scoped.</t>
 
       <t>Applications running on a host that does not protect the Multicast
       Application Port from misuse are vulnerable to a denial of service
       attack if another application claims exclusive access to the port.
       This vulnerability is not unique to the Multicast Application Port.
-      Regardless of what port is used by a multicast application, a
-      malicious application could claim exclusive access to that port first,
-      and thereby prevent the legitimate application from being able to use
-      its port.</t>
+      Regardless of what port is used by any application,
+      a malicious application could claim exclusive access
+      to that port first, and thereby prevent the legitimate
+      application from being able to use its port.</t>
 
       <t>Systems that use POSIX-like socket APIs typically have restrictions on binding multiple sockets to the same port. This can serve as a rudimentary security mechanism in that other local applications cannot eavesdrop on the multicast stream. A necessary side-effect of using the Multicast Application Port is that applications can no longer rely on these security mechanisms. These applications may want to incorporate additional security measures into their protocol. Note that the problem of local eavesdropping is typically no worse than eavesdropping in-flight, so it is likely that both attack vectors can be resolved by the same security measure.</t>
     </section>
