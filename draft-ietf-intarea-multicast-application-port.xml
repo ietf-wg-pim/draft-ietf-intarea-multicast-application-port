@@ -266,15 +266,15 @@
       (Note that with BSD Sockets and similar APIs, just binding to
       the appropriate multicast group address alone is insufficient.
       After binding, the application then needs to use
-      IP_ADD_MEMBERSHIP, IPV6_JOIN_GROUP,
-      MCAST_JOIN_GROUP, MCAST_JOIN_SOURCE_GROUP, or equivalent
+      <tt>IP_ADD_MEMBERSHIP</tt>, <tt>IPV6_JOIN_GROUP</tt>,
+      <tt>MCAST_JOIN_GROUP</tt>, <tt>MCAST_JOIN_SOURCE_GROUP</tt>, or equivalent
       to tell the networking stack that it actually wants to
       receive traffic sent to that multicast group address.)
       However, this approach limits applications to
       only one multicast group address per socket.
       An alternative approach, on platforms which deliver
       only traffic for groups the socket has joined
-      (e.g., Linux with IP_MULTICAST_ALL=0),
+      (e.g., Linux with <tt>IP_MULTICAST_ALL=0</tt>),
       is to bind the socket to the wildcard (zero) address
       (<xref target="RFC3493" sectionFormat="comma" section="3.8"/>)
       and then have that socket join the desired multicast group(s).</t>
