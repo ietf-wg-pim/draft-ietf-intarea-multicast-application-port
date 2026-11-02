@@ -256,14 +256,36 @@
       <tt>SO_REUSEPORT</tt>, and <tt>SO_REUSE_MULTICASTPORT</tt>,
       but the specific mechanism varies by platform.</t>
 
-      <t>Applications SHALL NOT send any non-multicast packets
-      using the Multicast Application Port
-      as either a source port or destination port.</t>
+      <t>For efficiency, applications SHOULD use networking APIs
+      in such a way to minimize reception of unwanted traffic
+      that the application then immediately has to discard.
+      For example, on some platforms it may be prudent
+      to bind a socket to the application instantiation's
+      multicast group address and the Multicast Application Port,
+      so that it only receives the packets it wants.
+      (Note that with BSD Sockets and similar APIs, just binding to
+      the appropriate multicast group address alone is insufficient.
+      After binding, the application then needs to use
+      IP_ADD_MEMBERSHIP, IPV6_JOIN_GROUP,
+      MCAST_JOIN_GROUP, MCAST_JOIN_SOURCE_GROUP, or equivalent
+      to tell the networking stack that it actually wants to
+      receive traffic sent to that multicast group address.)
+      However, this approach limits applications to
+      only one multicast group address per socket.
+      An alternative approach, on platforms which deliver
+      only traffic for groups the socket has joined
+      (e.g., Linux with IP_MULTICAST_ALL=0),
+      is to bind the socket to the wildcard (zero) address
+      (<xref target="RFC3493" sectionFormat="comma" section="3.8"/>)
+      and then have that socket join the desired multicast group(s).</t>
 
       <t>Applications SHALL discard all non-multicast packets
-      received on the Multicast Application Port.</t>
+      received that use the Multicast Application Port
+      as either a source or destination port.</t>
 
-      <t>Furthermore, application instantiations SHALL discard
+      <t>Furthermore, to guard against operating systems that do
+      not perform the inbound traffic filtering described here,
+      application instantiations SHALL discard
       datagrams received on the Multicast Application Port
       unless they are addressed to a multicast group address
       being used by that application instantiation
@@ -273,6 +295,10 @@
       for IPv6 <xref target="RFC3542"/> and
       "Socket Interface Extensions for Multicast Source Filters"
       <xref target="RFC3678"/>.</t>
+
+      <t>Applications SHALL NOT send any non-multicast
+      packets using the Multicast Application Port
+      as either a source port or destination port.</t>
     </section>
 
     <section title="Host Requirements" anchor="host">
@@ -302,15 +328,8 @@
       written application will work both on platforms that implement
       these protections and on older platforms that do not.</t>
 
-      <t>Hosts SHALL prevent use of the port with the wildcard address (<xref target="RFC3493" sectionFormat="comma" section="3.8"/>) by having the socket bind operation return an error code.</t>
-
-      <t>Hosts SHALL prevent applications from sending non-multicast packets using the Multicast Application Port as either a source or destination port by having the send operation return an error code.</t>
-
-      <t>Hosts SHALL discard all incoming non-multicast packets
-      that use the Multicast Application Port as either a source
-      or destination port.</t>
-
-      <t>Hosts SHOULD deliver to an application endpoint (e.g., socket)
+      <t>For efficiency,
+      hosts SHOULD deliver to an application endpoint (e.g., socket)
       only packets addressed to the multicast group address(es) that
       the application endpoint has joined.
       Technically, this is not essential, since applications are
@@ -318,10 +337,19 @@
       Application Port if they are not addressed to the multicast
       group address the application endpoint has joined
       (and received on the desired network interface, if specified).
-      However, for efficiency, it is advisable to perform this
-      filtering, since it is wasteful to deliver packets to an
-      application endpoint only to have that application
-      endpoint promptly discard them.</t>
+      However, it is advisable to perform this filtering for
+      efficiency, since it is wasteful to deliver packets to
+      an application endpoint only to have that application
+      promptly discard them.</t>
+
+      <t>Hosts SHALL discard all incoming non-multicast packets
+      that use the Multicast Application Port as either a source
+      or destination port.</t>
+
+      <t>Hosts SHALL prevent applications from sending
+      non-multicast packets using the Multicast Application Port
+      as either a source or destination port by having
+      the send operation return an error code.</t>
 
       <t>Some networking APIs provide a mechanism to allow
       client software to disable generation and checking
