@@ -195,7 +195,7 @@
       send unicast messages using a different destination port.
       One possible benefit of doing so is to
       mitigate the limitations of multicast delivery,
-      particularly on wireless media<xref target="RFC9119"/>.</t>
+      particularly on wireless media <xref target="RFC9119"/>.</t>
 
       <section title="Multicast Address Assignment">
         <t>The ability to identify a multicast application instantiation
