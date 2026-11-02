@@ -265,7 +265,7 @@
       Relevant socket API mechanisms such as `IP_PKTINFO` and
       `IPV6_PKTINFO` are described in the Advanced Sockets API
       for IPv6 <xref target="RFC3542"/> and
-      “Socket Interface Extensions for Multicast Source Filters”
+      "Socket Interface Extensions for Multicast Source Filters"
       <xref target="RFC3678"/>.</t>
     </section>
 
@@ -289,7 +289,7 @@
       otherwise fail the application’s attempt to bind to the
       Multicast Application Port. This helps the application
       developer discover their mistake and correct it.
-      The networking API MUST NOT try to be “helpful” by silently
+      The networking API MUST NOT try to be "helpful" by silently
       correcting the misbehaving application and automatically
       granting it shared access to the Multicast Application Port.
       Doing so would defeat the goal of ensuring that a properly
