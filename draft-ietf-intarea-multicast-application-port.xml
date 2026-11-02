@@ -113,13 +113,14 @@
 
     <section title="Introduction">
       <t>The Internet community has recognized the need to be
-      judicious when assigning port numbers <xref target="RFC6335"/>
-      (<xref target="RFC7605" sectionFormat="comma" section="6"/>).
+      judicious when assigning port numbers
+      (<xref target="RFC6335"/>;
+      <xref target="RFC7605" sectionFormat="comma" section="6"/>).
       With unicast applications, the need for explicit port assignment
       has been reduced by techniques such as locally assigning a dynamic
       port, combined with some mechanism for advertising that port
-      <xref target="RFC6763"/>
-      (<xref target="RFC7605" sectionFormat="comma" section="7.1"/>).
+      (<xref target="RFC6763"/>;
+      <xref target="RFC7605" sectionFormat="comma" section="7.1"/>).
       Dynamic assignment does not work with multicast applications
       because it is impossible to guarantee that the port remains unused
       by all hosts that may want to join a given multicast group.
