@@ -409,7 +409,7 @@
       Application Port are identified by their destination
       multicast address (ASM) or (S,G) channel (SSM), rules
       referencing the Multicast Application Port SHOULD also
-      consider the applicable network-layer address(es).
+      consider any applicable network-layer address.
       A firewall rule that only references the Multicast
       Application Port would match all applications using
       that port, which is too broadly scoped.</t>
