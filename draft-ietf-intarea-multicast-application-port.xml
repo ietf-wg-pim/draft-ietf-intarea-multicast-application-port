@@ -104,7 +104,7 @@
     Consequently, each instantiation of a multicast application
     requires its own unique multicast group address.
     How a unique multicast group address is assigned for
-    each instantiation is is addressed by other IETF documents,
+    each instantiation is addressed by other IETF documents,
     such as the guidelines for IPv4 multicast address assignment
     <xref target="RFC5771"/>
     and for IPv6 multicast address assignment
@@ -124,10 +124,10 @@
       Dynamic assignment does not work with multicast applications
       because it is impossible to guarantee that the port remains unused
       by all hosts that may want to join a given multicast group.
-      The result is that traditionally each multicast application layer
-      protocol has typically requested its own dedicated port assignment.
-      It might seem that even this is insufficient, and in fact
-      each instantiation of each multicast application layer
+      The result is that traditionally each multicast application-layer
+      protocol has requested its own dedicated port assignment.
+      It might seem that even this is insufficient, and perhaps
+      each instantiation of each multicast application-layer
       protocol should be assigned its own unique port.
       In fact, this is not necessary.</t>
 
@@ -162,7 +162,7 @@
 
       <t>Multicast applications can begin using the Multicast
       Application Port immediately, following the guidance in
-      <xref target="application"/>),      
+      <xref target="application"/>,
       on any platform that supports <tt>SO_REUSEPORT</tt> or an equivalent.
       In addition, network protocol stacks and APIs can assist in the
       future development of such applications by enforcing special
@@ -343,7 +343,7 @@
       <t>A host firewall running on Host A (or a network firewall
       between Host A and Host B) may block Message 2 because Message 1
       has port 8738 as its destination port but Message 2 does not have
-      (and it not allowed to have) port 8738 as its source port.</t>
+      (and is not allowed to have) port 8738 as its source port.</t>
 
       <t>While a firewall could be configured to accept Message 2, this configuration would have to be automated because the use of dynamic ports makes manual configuration too costly even in small deployments. However, this automation leads to unacceptable security risks. For example, if a firewall were to respond to Message 1 by opening up the source port used in the message, a malicious application running on the host could open large holes in the firewall by repeatedly sending variations of Message 1 using different source ports.</t>
 
@@ -396,11 +396,11 @@
       to the Multicast Application Port using a specified
       multicast address. Another program, such as <tt>socat</tt>,
       can be used to send messages and demonstrate, with an
-      unmodified operating system, that the prototype will (1)
-      display messages sent to the Multicast Application Port
-      using the specified multicast address, and (2) <em>not</em>
-      sent to the Multicast Application Port but addressed to a
-      different multicast address.</t>
+      unmodified operating system, that the prototype will
+      (1) display messages sent to the Multicast Application
+      Port using the specified multicast address, and
+      (2) <em>not</em> display messages sent to the Multicast Application
+      Port but addressed to a different multicast address.</t>
     </section>
 
     <section title="Security Considerations">
@@ -410,7 +410,7 @@
       Application Port are identified by their destination
       multicast address (ASM) or (S,G) channel (SSM), rules
       referencing the Multicast Application Port SHOULD also
-      consider any applicable network layer address.
+      consider any applicable network-layer address.
       A firewall rule that only references the Multicast
       Application Port would match all applications using
       that port, which is too broadly scoped.</t>
@@ -523,7 +523,7 @@ Port Number         8738]]>
       <t>Special thanks to the National Marine Electronics Association for their contributions in developing marine industry standards and their support for this research.</t>
 
       <t>The authors are grateful to the members of the PIM and
-      INT-AREA working groups for their review of this document,
+      INTAREA working groups for their review of this document,
       and to the following individuals specifically:</t>
 
       <ul>
