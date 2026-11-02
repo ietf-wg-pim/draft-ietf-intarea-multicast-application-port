@@ -274,7 +274,8 @@
       only one multicast group address per socket.
       An alternative approach, on platforms which deliver
       only traffic for groups the socket has joined
-      (e.g., Linux with <tt>IP_MULTICAST_ALL=0</tt>),
+      (e.g., Linux with <tt>IP_MULTICAST_ALL=0</tt> or
+      <tt>IPV6_MULTICAST_ALL=0</tt>),
       is to bind the socket to the wildcard (zero) address
       (<xref target="RFC3493" sectionFormat="comma" section="3.8"/>)
       and then have that socket join the desired multicast group(s).</t>
