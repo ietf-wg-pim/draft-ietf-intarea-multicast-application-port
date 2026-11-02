@@ -123,10 +123,10 @@
       Dynamic assignment does not work with multicast applications
       because it is impossible to guarantee that the port remains unused
       by all hosts that may want to join a given multicast group.
-      The result is that traditionally each multicast application-layer
+      The result is that traditionally each multicast application layer
       protocol has typically requested its own dedicated port assignment.
       It might seem that even this is insufficient, and in fact
-      each instantiation of each multicast application-layer
+      each instantiation of each multicast application layer
       protocol should be assigned its own unique port.
       In fact, this is not necessary.</t>
 
@@ -409,7 +409,7 @@
       Application Port are identified by their destination
       multicast address (ASM) or (S,G) channel (SSM), rules
       referencing the Multicast Application Port SHOULD also
-      consider any applicable network-layer address.
+      consider any applicable network layer address.
       A firewall rule that only references the Multicast
       Application Port would match all applications using
       that port, which is too broadly scoped.</t>
