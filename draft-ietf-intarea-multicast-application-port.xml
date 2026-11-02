@@ -318,7 +318,7 @@
       <t>If the application fails to follow the correct steps to
       share the Multicast Application Port, then the networking
       API SHALL return an error code, throw an exception, or
-      otherwise fail the application’s attempt to bind to the
+      otherwise fail the application's attempt to bind to the
       Multicast Application Port. This helps the application
       developer discover their mistake and correct it.
       The networking API MUST NOT try to be "helpful" by silently
