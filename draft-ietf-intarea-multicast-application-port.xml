@@ -263,8 +263,8 @@
       unless they are addressed to a multicast group address
       being used by that application instantiation
       (and received on the desired network interface, if specified).
-      Relevant socket API mechanisms such as `IP_PKTINFO` and
-      `IPV6_PKTINFO` are described in the Advanced Sockets API
+      Relevant socket API mechanisms such as <tt>IP_PKTINFO</tt> and
+      <tt>IPV6_PKTINFO</tt> are described in the Advanced Sockets API
       for IPv6 <xref target="RFC3542"/> and
       "Socket Interface Extensions for Multicast Source Filters"
       <xref target="RFC3678"/>.</t>
