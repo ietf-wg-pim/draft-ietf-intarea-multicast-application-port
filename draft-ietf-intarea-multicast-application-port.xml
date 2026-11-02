@@ -92,6 +92,11 @@
     forwarded, so that they reach all group members that need them,
     without being delivered to hosts or networks that do not.</t>
 
+    <t>For the purposes of this document, a "multicast packet"
+    is a packet addressed to a valid multicast group address.
+    A "non-multicast packet" is a packet with any other destination
+    address, including unicast, anycast, and the broadcast address.</t>
+
     <t>This document describes each separate usage of an
     application as an "instantiation" of that application.
     For example, a multicast videoconferencing application
@@ -225,7 +230,7 @@
       address and destination multicast address <xref target="RFC4607"/>.
       Because unicast traffic carries no such identifier,
       the Multicast Application Port MUST NOT be used as either a
-      source port or destination port for any non-multicast messages.</t>
+      source port or destination port for any non-multicast packets.</t>
 
       <t>The Multicast Application Port MAY be used as a source port
       by an application that sends only multicast messages.</t>
@@ -251,11 +256,11 @@
       <tt>SO_REUSEPORT</tt>, and <tt>SO_REUSE_MULTICASTPORT</tt>,
       but the specific mechanism varies by platform.</t>
 
-      <t>Applications SHALL NOT send any non-multicast messages
+      <t>Applications SHALL NOT send any non-multicast packets
       using the Multicast Application Port
       as either a source port or destination port.</t>
 
-      <t>Applications SHALL discard all non-multicast datagrams
+      <t>Applications SHALL discard all non-multicast packets
       received on the Multicast Application Port.</t>
 
       <t>Furthermore, application instantiations SHALL discard
