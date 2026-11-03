@@ -1,0 +1,82 @@
+#include <arpa/inet.h>
+#include <errno.h>
+#include <netinet/in.h>
+#include <netinet/ip.h>
+#include <stdio.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+
+#define MCAST_APP_PORT	0x2222
+
+#define min(a, b) ((a) < (b) ? (a) : (b))
+#define SOCKET_ERROR -1
+
+int main(int argc, char *argv[]) {
+    struct sockaddr_in sockaddr;
+    struct ip_mreq mreq;
+    int sock;
+    int reuseaddr = 1;
+    int mcast_all = 0;
+    char buf[128];
+    ssize_t rcvd;
+
+    if (argc != 3) {
+        fprintf(stderr, "Usage: mcast_app_port_linux_wildcard [multicast address] [interface address]\n");
+        return 1;
+    }
+
+    if (inet_pton(AF_INET, argv[1], &mreq.imr_multiaddr) != 1) {
+        fprintf(stderr, "Cannot convert multicast address\n");
+        return 1;
+    }
+
+    if (inet_pton(AF_INET, argv[2], &mreq.imr_interface) != 1) {
+        fprintf(stderr, "Cannot convert interface address\n");
+        return 1;
+    }
+
+    sockaddr.sin_family = AF_INET;
+    sockaddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    sockaddr.sin_port = htons(MCAST_APP_PORT);
+
+    sock = socket(AF_INET, SOCK_DGRAM, 0);
+    if (sock == SOCKET_ERROR) {
+        perror("socket() failure");
+        return 1;
+    }
+
+    if (setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char*)&reuseaddr, sizeof(reuseaddr)) == SOCKET_ERROR) {
+        perror("SO_REUSEADDR failure");
+        return 1;
+    }
+
+    if (setsockopt(sock, IPPROTO_IP, IP_MULTICAST_ALL, &mcast_all, sizeof(mcast_all)) == SOCKET_ERROR) {
+        perror("IP_MULTICAST_ALL failure");
+        return 1;
+    }
+
+    if (bind(sock, (struct sockaddr *)&sockaddr, sizeof(sockaddr)) == SOCKET_ERROR) {
+        perror("bind() failure");
+        return 1;
+    }
+
+    if (setsockopt(sock, IPPROTO_IP, IP_ADD_MEMBERSHIP, &mreq, sizeof(mreq)) == SOCKET_ERROR) {
+        perror("setsockopt() failure");
+        return 1;
+    }
+
+    /* Note that additional multicast groups can be joined
+       by repeating the IP_ADD_MEMBERSHIP setsockopt call */
+
+    while (1) {
+        rcvd = recv(sock, buf, sizeof(buf), 0);
+        if (rcvd == SOCKET_ERROR) {
+            perror("recv() failure");
+            return 1;
+        }
+        buf[min(rcvd, sizeof(buf) - 1)] = '\0';
+        printf("%s", buf);
+    }
+
+    return 0;
+}
