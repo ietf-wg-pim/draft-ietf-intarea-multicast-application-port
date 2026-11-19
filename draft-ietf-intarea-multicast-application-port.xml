@@ -247,7 +247,7 @@
       <t>Applications that use the Multicast Application Port
       MUST meet the requirements in this section.</t>
 
-      <t>Application instantiations SHALL NOT prevent other
+      <t>Application instantiations MUST NOT prevent other
       application instantiations from using this port.
       On hosts using POSIX-like socket APIs <xref target="POSIX"/>,
       this is typically accomplished by enabling a socket option
@@ -280,13 +280,13 @@
       (<xref target="RFC3493" sectionFormat="comma" section="3.8"/>)
       and then have that socket join the desired multicast group(s).</t>
 
-      <t>Applications SHALL discard all non-multicast packets
+      <t>Applications MUST discard all non-multicast packets
       received that use the Multicast Application Port
       as either a source or destination port.</t>
 
       <t>Furthermore, to guard against operating systems that do
       not perform the inbound traffic filtering described here,
-      application instantiations SHALL discard
+      application instantiations MUST discard
       datagrams received on the Multicast Application Port
       unless they are addressed to a multicast group address
       being used by that application instantiation
@@ -297,14 +297,14 @@
       "Socket Interface Extensions for Multicast Source Filters"
       <xref target="RFC3678"/>.</t>
 
-      <t>Applications SHALL NOT send any non-multicast
+      <t>Applications MUST NOT send any non-multicast
       packets using the Multicast Application Port
       as either a source port or destination port.</t>
     </section>
 
     <section title="Host Requirements" anchor="host">
       <t>Hosts implementing this specification
-      SHALL require applications using this port to use
+      MUST require applications using this port to use
       it non-exclusively. On hosts using POSIX-like socket APIs
       <xref target="POSIX"/>, this is typically accomplished by
       enabling a socket option before binding the socket.
@@ -318,7 +318,7 @@
 
       <t>If the application fails to follow the correct steps to
       share the Multicast Application Port, then the networking
-      API SHALL return an error code, throw an exception, or
+      API MUST return an error code, throw an exception, or
       otherwise fail the application's attempt to bind to the
       Multicast Application Port. This helps the application
       developer discover their mistake and correct it.
@@ -343,11 +343,11 @@
       an application endpoint only to have that application
       promptly discard them.</t>
 
-      <t>Hosts SHALL discard all incoming non-multicast packets
+      <t>Hosts MUST discard all incoming non-multicast packets
       that use the Multicast Application Port as either a source
       or destination port.</t>
 
-      <t>Hosts SHALL prevent applications from sending
+      <t>Hosts MUST prevent applications from sending
       non-multicast packets using the Multicast Application Port
       as either a source or destination port by having
       the send operation return an error code.</t>
