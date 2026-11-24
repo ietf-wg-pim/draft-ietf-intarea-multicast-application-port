@@ -277,37 +277,37 @@
       <t>For efficiency, applications SHOULD use networking APIs
       in such a way to minimize reception of unwanted traffic
       that the application then immediately has to discard.
-      For example, on some platforms it may be prudent
-      to bind a socket to the application instantiation's
-      multicast group address and the Multicast Application Port,
-      so that it only receives the packets it wants.
+      An application using POSIX-like socket APIs MUST bind its
+      multicast receiving socket to the application instantiation's
+      multicast destination address and the Multicast Application Port,
+      so that the application receives only the appropriate packets.
+      Applications MUST NOT bind their multicast receiving socket
+      to the wildcard (zero) address
+      (<xref target="RFC3493" sectionFormat="comma" section="3.8"/>).
       (Note that with BSD Sockets and similar APIs, just binding to
-      the appropriate multicast group address alone is insufficient.
+      the appropriate multicast destination address alone is insufficient.
       After binding, the application then needs to use
       <tt>IP_ADD_MEMBERSHIP</tt>, <tt>IPV6_JOIN_GROUP</tt>,
       <tt>MCAST_JOIN_GROUP</tt>, <tt>MCAST_JOIN_SOURCE_GROUP</tt>, or equivalent
-      to tell the networking stack that it actually wants to
-      receive traffic sent to that multicast group address.)
-      However, this approach limits applications to
-      only one multicast group address per socket.
-      An alternative approach, on platforms which deliver
-      only traffic for groups the socket has joined
-      (e.g., Linux with <tt>IP_MULTICAST_ALL=0</tt> or
-      <tt>IPV6_MULTICAST_ALL=0</tt>),
-      is to bind the socket to the wildcard (zero) address
-      (<xref target="RFC3493" sectionFormat="comma" section="3.8"/>)
-      and then have that socket join the desired multicast group(s).</t>
+      to tell the networking stack that it should actually subscribe to
+      receive packets addressed to the indicated multicast group address.)
+      Applications receiving SSM traffic SHOULD
+      also use socket options such as <tt>IP_MULTICAST_ALL=0</tt>
+      or <tt>IPV6_MULTICAST_ALL=0</tt>, where available,
+      to further restrict delivered traffic to just packets
+      addressed to the desired multicast group address.
+      An application receiving multicast traffic on more than
+      one multicast group address will need to create a separate
+      bound socket for each desired multicast group address.</t>
 
-      <t>Applications MUST discard all non-multicast packets
-      received that use the Multicast Application Port
+      <t>Applications MUST
+      discard all received non-multicast packets
+      that use the Multicast Application Port
       as either a source or destination port.</t>
 
-      <t>Furthermore, to guard against operating systems that do
-      not perform the inbound traffic filtering described here,
-      application instantiations MUST discard
+      <t>As a further safeguard, applications MUST discard
       datagrams received on the Multicast Application Port
-      unless they are addressed to a multicast group address
-      being used by that application instantiation
+      that are not addressed to the desired multicast group address
       (and received on the desired network interface, if specified).
       Relevant socket API mechanisms such as <tt>IP_PKTINFO</tt> and
       <tt>IPV6_PKTINFO</tt> are described in the Advanced Sockets API
@@ -321,17 +321,17 @@
     </section>
 
     <section title="Host Requirements" anchor="host">
-      <t>Hosts implementing this specification
-      MUST require applications using this port to use
-      it non-exclusively. On hosts using POSIX-like socket APIs
-      <xref target="POSIX"/>, this is typically accomplished by
-      enabling a socket option before binding the socket.
+      <t>Hosts implementing this specification MUST require
+      applications using this port to use it non-exclusively.
+      On hosts using POSIX-like socket APIs <xref target="POSIX"/>,
+      this is typically accomplished by enabling a socket option
+      before binding the socket.
       Common socket options include <tt>SO_REUSEADDR</tt>,
       <tt>SO_REUSEPORT</tt>, and <tt>SO_REUSE_MULTICASTPORT</tt>,
-      but each platform provides its own method.
+      but the specific mechanism varies by platform.
       This requirement ensures that applications developed on a
       conformant host will follow the correct rules, and therefore
-      also work correctly on older hosts that do not enforce
+      will also work correctly on older hosts that do not enforce
       the protections on the Multicast Application Port.</t>
 
       <t>If the application fails to follow the correct steps to
@@ -361,9 +361,10 @@
       an application endpoint only to have that application
       promptly discard them.</t>
 
-      <t>Hosts MUST discard all incoming non-multicast packets
-      that use the Multicast Application Port as either a source
-      or destination port.</t>
+      <t>Hosts MUST
+      discard all received non-multicast packets
+      that use the Multicast Application Port
+      as either a source or destination port.</t>
 
       <t>Hosts MUST prevent applications from sending
       non-multicast packets using the Multicast Application Port
