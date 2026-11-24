@@ -16,7 +16,7 @@
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="std"
-  docName="draft-ietf-intarea-multicast-application-port-09"
+  docName="draft-ietf-intarea-multicast-application-port-10"
   ipr="trust200902"
   submissionType="IETF"
   consensus="true">
@@ -56,7 +56,7 @@
       </address>
     </author>
 
-    <date day="2" month="November" year="2026"/>
+    <date day="24" month="November" year="2026"/>
 
     <abstract>
       <t>This document discusses the drawbacks of the current practice
