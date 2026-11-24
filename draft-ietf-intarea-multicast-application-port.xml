@@ -114,6 +114,21 @@
       <xref target="RFC5771"/>
       and for IPv6 multicast address assignment
       <xref target="RFC3307"/> <xref target="RFC10028"/>.</t>
+
+      <t>This document does not specify any over-the-air protocol,
+      except inasmuch as it specifies the sixteen-bit value
+      that multicast traffic that follows this specification
+      must use in the destination-port field in the UDP header.
+      When multiple applications
+      (and multiple instantiations of the same application)
+      on a single host receive multicast traffic with the same sixteen-bit
+      value in the destination-port field of the UDP header, there are
+      procedures they must follow to share that UDP port cooperatively.
+      This document describes those procedures with reference to
+      BSD Sockets <xref target="POSIX"/> as a representative example API.
+      Applications using other networking APIs will need to
+      follow the equivalent procedures available in those APIs.</t>
+
     </section>
 
     <section title="Introduction">
