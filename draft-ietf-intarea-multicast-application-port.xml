@@ -80,40 +80,40 @@
       in BCP 14 <xref target="RFC2119"/> <xref target="RFC8174"/> when,
       and only when, they appear in all capitals, as shown here.</t>
 
-    <t>This document uses the term "multicast group address"
-    to refer collectively to the IP destination address for
-    Any-Source Multicast (ASM) <xref target="RFC1112"/>,
-    and the (S,G) pair for
-    Source-Specific Multicast (SSM) <xref target="RFC4607"/>,
-    since they serve the same functional purpose.
-    Both exist to identify a stream of packets related to a particular
-    activity. The network's multicast routing infrastructure uses
-    the multicast group address to determine where packets should be
-    forwarded, so that they reach all group members that need them,
-    without being delivered to hosts or networks that do not.</t>
+      <t>This document uses the term "multicast group address"
+      to refer collectively to the IP destination address for
+      Any-Source Multicast (ASM) <xref target="RFC1112"/>,
+      and the (S,G) pair for
+      Source-Specific Multicast (SSM) <xref target="RFC4607"/>,
+      since they serve the same functional purpose.
+      Both exist to identify a stream of packets related to a particular
+      activity. The network's multicast routing infrastructure uses
+      the multicast group address to determine where packets should be
+      forwarded, so that they reach all group members that need them,
+      without being delivered to hosts or networks that do not.</t>
 
-    <t>For the purposes of this document, a "multicast packet"
-    is a packet addressed to a valid multicast group address.
-    A "non-multicast packet" is a packet with any other destination
-    address, including unicast, anycast, and the broadcast address.</t>
+      <t>For the purposes of this document, a "multicast packet"
+      is a packet addressed to a valid multicast group address.
+      A "non-multicast packet" is a packet with any other destination
+      address, including unicast, anycast, and the broadcast address.</t>
 
-    <t>This document describes each separate usage of an
-    application as an "instantiation" of that application.
-    For example, a multicast videoconferencing application
-    may be in use all over the world for a thousand
-    different videoconference meetings at the same time.
-    It would be terribly inefficient (and would defeat the purpose of
-    multicast) if all the meetings were to use the same multicast group,
-    and all copies of the application were to receive all the traffic
-    for all videoconference meetings taking place at that time.
-    Consequently, each instantiation of a multicast application
-    requires its own unique multicast group address.
-    How a unique multicast group address is assigned for
-    each instantiation is addressed by other IETF documents,
-    such as the guidelines for IPv4 multicast address assignment
-    <xref target="RFC5771"/>
-    and for IPv6 multicast address assignment
-    <xref target="RFC3307"/> <xref target="RFC10028"/>.</t>
+      <t>This document describes each separate usage of an
+      application as an "instantiation" of that application.
+      For example, a multicast videoconferencing application
+      may be in use all over the world for a thousand
+      different videoconference meetings at the same time.
+      It would be terribly inefficient (and would defeat the purpose of
+      multicast) if all the meetings were to use the same multicast group,
+      and all copies of the application were to receive all the traffic
+      for all videoconference meetings taking place at that time.
+      Consequently, each instantiation of a multicast application
+      requires its own unique multicast group address.
+      How a unique multicast group address is assigned for
+      each instantiation is addressed by other IETF documents,
+      such as the guidelines for IPv4 multicast address assignment
+      <xref target="RFC5771"/>
+      and for IPv6 multicast address assignment
+      <xref target="RFC3307"/> <xref target="RFC10028"/>.</t>
     </section>
 
     <section title="Introduction">
