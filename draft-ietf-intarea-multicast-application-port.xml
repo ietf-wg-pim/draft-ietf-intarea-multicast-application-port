@@ -239,8 +239,11 @@
       RECOMMENDED that the source port used for multicast messages
       be set to the port to which receivers can send unicast replies.
       Note that such arrangements would likely require each
-      participant to use multiple sockets, because it must bind to
-      both the Multicast Application Port and its unicast port.</t>
+      participant to use multiple sockets, because the software
+      must bind to the Multicast Application Port on one socket
+      (to receive multicast packets)
+      and bind to its unicast port on another socket
+      (to receive unicast packets).</t>
     </section>
 
     <section title="Application Requirements" anchor="application">
