@@ -386,9 +386,15 @@
       <t>Many network firewalls, which operate on network infrastructure, and host firewalls, which operate on individual hosts, are configured to accept incoming messages as long as there was first an outgoing message using the same set of ports <xref target="RFC7288"/>. Consider the following sequence of messages:</t>
 
       <ol>
-        <li>(Multicast) Host A to group containing Host B<br />Source Port: 50000 (Dynamic)<br />Dest Port: 8738 (0x2222)</li>
-        <li>(Unicast) Host B to Host A<br />Source Port: 60000 (Dynamic)<br />Dest Port: 50000</li>
-        <li>(Unicast) Host A to Host B<br />Source Port: 50000<br />Dest Port: 60000</li>
+        <li>(Multicast) Host A to group containing Host B
+        <br />Source Port: 50000 (Dynamic)
+        <br />Destination Port: 8738 (0x2222)</li>
+        <li>(Unicast) Host B to Host A
+        <br />Source Port: 60000 (Dynamic)
+        <br />Destination Port: 50000</li>
+        <li>(Unicast) Host A to Host B
+        <br />Source Port: 50000
+        <br />Destination Port: 60000</li>
       </ol>
 
       <t>A host firewall running on Host A (or a network firewall
