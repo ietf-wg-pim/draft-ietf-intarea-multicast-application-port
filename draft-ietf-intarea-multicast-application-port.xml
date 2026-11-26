@@ -558,10 +558,19 @@ Port Number         8738]]>
 
   <back>
     <references title="Normative References">
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.1112.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
-      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3493.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4607.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+      <reference anchor="POSIX" target="https://pubs.opengroup.org/onlinepubs/9699919799/">
+        <front>
+          <title>Portable Operating System Interface Base Specifications, Issue 7</title>
+          <author>
+            <organization>The Open Group</organization>
+          </author>
+          <date month="January" year="2018" />
+        </front>
+      </reference>
     </references>
     <references title="Informative References">
       <reference anchor="IANA-APP" target="https://www.iana.org/form/ports-services">
@@ -588,19 +597,10 @@ Port Number         8738]]>
           </author>
         </front>
       </reference>
-      <reference anchor="POSIX" target="https://pubs.opengroup.org/onlinepubs/9699919799/">
-        <front>
-          <title>Portable Operating System Interface Base Specifications, Issue 7</title>
-          <author>
-            <organization>The Open Group</organization>
-          </author>
-          <date month="January" year="2018" />
-        </front>
-      </reference>
-      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.1112.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.1122.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2365.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3307.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3493.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3542.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3678.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4007.xml"/>
