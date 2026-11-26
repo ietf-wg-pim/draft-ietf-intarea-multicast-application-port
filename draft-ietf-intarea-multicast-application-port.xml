@@ -506,10 +506,14 @@ Port Number         8738]]>
 
       <t>IANA is <em>requested</em> to update its "Application for Service
       Names and User Port Numbers" <xref target="IANA-APP"/>
-      to reference this document and ask applicants whether
-      the Multicast Application Port could be used instead.
+      to reference this document and include text
+      asking applicants to consider whether using the
+      Multicast Application Port would be appropriate.
       These changes will help applicants understand that a dedicated
-      port may be unnecessary for a multicast protocol.</t>
+      port may be unnecessary for their multicast protocol.
+      If the applicant believes that their multicast protocol does
+      require its own dedicated port, the responsibility belongs with the
+      Designated Expert to ascertain whether the applicant is correct. </t>
     </section>
   </middle>
 
