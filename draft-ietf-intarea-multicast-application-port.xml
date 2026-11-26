@@ -207,8 +207,8 @@
 
       <t>Use of this port is optional.
       In some circumstances a dedicated port may still be preferable,
-      such as when participants cannot meet the requirements in
-      <xref target="application"/>,
+      such as when participants cannot meet the
+      application requirements (<xref target="application"/>),
       or when a firewall blocks a traffic pattern used
       by the application (<xref target="firewall"/>).</t>
 
@@ -416,7 +416,12 @@
     </section>
 
     <section title="Firewall Considerations" anchor="firewall">
-      <t>Many network firewalls, which operate on network infrastructure, and host firewalls, which operate on individual hosts, are configured to accept incoming messages as long as there was first an outgoing message using the same set of ports <xref target="RFC7288"/>. Consider the following sequence of messages:</t>
+      <t>Many network firewalls (which operate on network infrastructure)
+      and host firewalls (which operate on individual hosts)
+      are configured to accept incoming messages as long as
+      there was first an outgoing message using the same
+      set of ports <xref target="RFC7288"/>.
+      Consider the following sequence of messages:</t>
 
       <ol>
         <li>(Multicast) Host A to group containing Host B
@@ -435,7 +440,15 @@
       has port 8738 as its destination port but Message 2 does not have
       (and is not allowed to have) port 8738 as its source port.</t>
 
-      <t>While a firewall could be configured to accept Message 2, this configuration would have to be automated because the use of dynamic ports makes manual configuration too costly even in small deployments. However, this automation leads to unacceptable security risks. For example, if a firewall were to respond to Message 1 by opening up the source port used in the message, a malicious application running on the host could open large holes in the firewall by repeatedly sending variations of Message 1 using different source ports.</t>
+      <t>While a firewall could be configured to accept Message 2, this
+      configuration would have to be automated <xref target="RFC6887"/>
+      because the use of dynamic ports makes manual configuration
+      impractical even in small deployments. However, this automation
+      leads to unacceptable security risks. For example, if a firewall
+      were to respond to Message 1 by opening up the source port used
+      in the message, a malicious application running on the host
+      could open large holes in the firewall by repeatedly sending
+      variations of Message 1 using different source ports.</t>
 
       <t>Host firewalls could be configured to allow messages associated
       with a given application instantiation (instead of specific ports),
@@ -610,6 +623,7 @@ Port Number         8738]]>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6335.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6762.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6763.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6887.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6935.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6936.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7288.xml"/>
