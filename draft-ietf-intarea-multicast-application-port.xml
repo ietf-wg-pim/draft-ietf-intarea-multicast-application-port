@@ -62,11 +62,11 @@
       <t>This document discusses the drawbacks of the current practice
       of assigning a UDP port to each multicast application.
       Such assignments are redundant because the multicast group address
-      already uniquely identifies the traffic.
-      This document assigns a UDP port specifically for use with
-      multicast applications and lists requirements for using this port.
-      This approach is compatible with existing protocol stacks today.
-      This document also defines
+      already identifies the traffic.
+      This document assigns a UDP port for use by multicast
+      applications and lists requirements for using it.
+      The approach works with existing protocol stacks today,
+      and the document also defines
       host enhancements that help safeguard the ongoing
       cooperative use of this port by multicast applications.</t>
     </abstract>
@@ -100,7 +100,7 @@
       <t>This document describes each separate usage of an
       application as an "instantiation" of that application.
       For example, a multicast videoconferencing application
-      may be in use all over the world for a thousand
+      could be in use all over the world for a thousand
       different videoconference meetings at the same time.
       It would be highly inefficient (and would defeat the purpose of
       multicast) if all the meetings were to use the same multicast group
@@ -132,10 +132,11 @@
       by all hosts that may want to join a given multicast group.
       As a result, each multicast application-layer protocol has
       traditionally requested its own dedicated port assignment.
-      It might seem that even this is insufficient, and perhaps
+      It might seem that even this is insufficient and that
       each instantiation of each multicast application-layer
-      protocol should be assigned its own unique port.
-      In fact, neither is necessary.</t>
+      protocol should be assigned its own port.
+      In fact, neither per-protocol nor per-instantiation
+      port assignment is necessary.</t>
 
       <t>In the TCP/IP model, the port number in the transport
       layer multiplexes unicast traffic destined for different
@@ -152,17 +153,17 @@
       run on the same host and share a single UDP port.
       This approach is widely used to run
       multiple independent implementations of Multicast DNS
-      <xref target="RFC6762"/> on a single device.</t>
+      <xref target="RFC6762"/> on a single host.</t>
 
-      <t>This observation is the inspiration behind this specification.
+      <t>This existing practice inspired this specification.
       If the destination port number is not needed for multicast traffic,
       and multiple instantiations of the same application can share a
       single port, then, by the same logic, <em>all</em> multicast
-      applications can share a single port, as long as they cooperate
-      and use the appropriate API mechanisms to share that port.
+      applications can share one port, as long as they cooperate
+      and use the appropriate API mechanisms.
       This specification codifies and extends this existing practice
-      and assigns a single UDP port that may be used by all
-      multicast applications: the Multicast Application Port.</t>
+      and assigns a single UDP port that all multicast applications
+      can use: the Multicast Application Port.</t>
 
       <t>This document does not specify any on-the-wire protocol,
       except inasmuch as it specifies the 16-bit value
@@ -175,83 +176,79 @@
       they need to follow certain procedures
       to share that UDP port cooperatively.
       This document describes those procedures with reference to
-      BSD Sockets <xref target="POSIX"/> as a representative API.
+      POSIX-like socket APIs <xref target="POSIX"/>
+      as a representative example.
       Applications using other networking APIs will need to
       follow the equivalent procedures available in those APIs.</t>
 
       <t>The Multicast Application Port can be used
       with both IPv6 and IPv4.</t>
 
-      <t>Multicast applications can begin using the Multicast
-      Application Port immediately, following the guidance in
-      <xref target="application"/>,
-      on any platform that supports <tt>SO_REUSEPORT</tt> or an equivalent.
+      <t>On any platform that supports <tt>SO_REUSEPORT</tt>
+      or an equivalent, multicast applications can begin using
+      the Multicast Application Port immediately by following
+      the guidance in <xref target="application"/>.
+
       In addition, network protocol stacks and APIs can help
       developers write correct applications by enforcing rules
-      (<xref target="host"/>) that ensure correct use of the
+      (<xref target="host"/>) that ensure proper use of the
       Multicast Application Port.
       Such enforcement helps detect and prevent application bugs
-      that would interfere with the correct sharing of this port.
-      Deployment of these special protections is expected to
-      take place incrementally, but applications are free to
-      use the Multicast Application Port without waiting for
-      host APIs to begin enforcing the protections.</t>
+      that would interfere with sharing of this port.
+      These protections are expected to be deployed incrementally,
+      but applications can use the Multicast Application Port
+      without waiting for networking APIs to enforce them.</t>
 
       <t>In effect, the Multicast Application Port becomes a
       vestigial placeholder value, present only because the UDP
       packet format requires a value in the destination port field.
-      At most, it signifies that the traffic is multicast.
-      However, even that information is redundant, since the fact
-      that the traffic is multicast can be inferred by observing
-      that the destination IP address is a multicast address.</t>
+      At most, it signifies that the traffic is multicast,
+      and even that is redundant, because the
+      destination IP address already indicates this.</t>
 
       <t>Use of this port is optional.
-      In some circumstances a dedicated port may still be preferable,
+      In some circumstances, a dedicated port might still be preferable,
       such as when participants cannot meet the
-      application requirements (<xref target="application"/>),
+      application requirements (<xref target="application"/>)
       or when a firewall blocks a traffic pattern used
       by the application (<xref target="firewall"/>).</t>
 
       <t>An application sending multicast messages using the
-      Multicast Application Port as the destination port may also
-      send unicast messages using a different destination port.
-      One possible benefit of doing so is to
+      Multicast Application Port as the destination port can also
+      send unicast messages, which necessarily use a different
+      destination port (<xref target="port"/>). Doing so can help
       mitigate the limitations of multicast delivery,
       particularly on wireless media <xref target="RFC9119"/>.</t>
 
-      <section title="Multicast Address Assignment">
-        <t>The ability to identify each multicast application instantiation
-        by its multicast group address requires that each application
-        instantiation is assigned its own unique multicast group address.
-        These unique multicast group address assignments are
-        outside the scope of this document,
-        and the requirement for each application instantiation
-        to have its own unique multicast group address applies
-        to all multicast traffic, regardless of whether it is
-        using the Multicast Application Port specified in this
-        document or some other UDP port.</t>
+      <section title="Multicast Group Address Assignment">
+        <t>Identifying each multicast application instantiation
+        by its multicast group address requires that each
+        instantiation be assigned its own multicast group address.
+        How these addresses are assigned is outside the scope of this
+        document. The need for a unique multicast group address per
+        instantiation applies to all multicast traffic, whether it
+        uses the Multicast Application Port or some other UDP port.</t>
 
         <t>The network's multicast routing infrastructure
         determines where packets should be forwarded by
-        examining the multicast group address of an IP packet,
+        examining the multicast group address of each IP packet,
         without regard for the destination port field in the UDP header.
-        The goal of multicast routing is for the network to deliver
-        packets efficiently to all the intended recipients of those packets,
-        <em>without</em> wasting network resources by delivering packets
-        to networks and hosts that do not need to receive those packets.
+        The goal of multicast routing is to deliver packets
+        efficiently to all intended recipients, <em>without</em>
+        wasting resources on networks and hosts that do not need them.
         If numerous multicast applications were to use the same
         multicast group address, differentiating their packets
         only by using different destination ports in the UDP header,
         then the network would expend resources to deliver
         <em>all</em> the traffic for <em>all</em> the applications to
         <em>all</em> hosts running <em>any</em> of those applications.
-        In the extreme case, where multicast applications send
-        their traffic to the "all hosts" multicast address and
-        rely on the UDP destination port to differentiate traffic,
-        multicast would degenerate into becoming a worldwide broadcast
-        system, with every host receiving every packet, and every network
+        In the extreme case, where all multicast applications
+        share a single global-scope multicast group address and
+        rely on the UDP destination port to tell their traffic apart,
+        multicast would degenerate into a worldwide broadcast system,
+        with every host receiving every packet and every network
         stack discarding all the unwanted packets after reception.
-        Clearly worldwide broadcast would not be not scaleable,
+        Clearly, worldwide broadcast would not be scalable
         and would not be in keeping with the spirit
         of how IP multicast is expected to operate
         <xref target="RFC2365"/>
@@ -259,7 +256,6 @@
         <xref target="RFC4007"/>
         <xref target="RFC4291"/>
         <xref target="RFC5771"/>
-        <xref target="RFC6308"/>
         <xref target="RFC7346"/>.</t>
 
         <t>Further information is available in
@@ -273,7 +269,7 @@
       </section>
     </section>
 
-    <section title="Assignment">
+    <section title="Multicast Application Port Assignment" anchor="port">
       <t>This document <em>requests</em> assignment of UDP port
       8738 (0x2222) with the service name "multicast-app".</t>
 
@@ -285,19 +281,19 @@
       the multicast destination address <xref target="RFC4607"/>.
       Because non-multicast traffic carries no such identifier,
       the Multicast Application Port MUST NOT be used as either
-      the source or the destination port of any non-multicast packet.</t>
+      a source or destination port of any non-multicast packet.</t>
 
       <t>The Multicast Application Port MAY be used as a source port
       by an application that sends only multicast messages.</t>
 
-      <t>If any application messages are unicast, then it is
-      RECOMMENDED that the source port used for multicast messages
-      be set to the port to which receivers can send unicast replies.
-      Note that such arrangements would likely require each
-      participant to use multiple sockets, because because it
-      needs to bind to the Multicast Application Port on one socket
+      <t>If an application also exchanges unicast messages, it is
+      RECOMMENDED that the source port of its multicast messages
+      be the port on which it receives unicast replies.
+      Such arrangements require each participant
+      to use at least two sockets:
+      one bound to the Multicast Application Port
       (to receive multicast packets)
-      and bind to its unicast port on another socket
+      and one bound to its unicast port
       (to receive unicast packets).</t>
     </section>
 
@@ -306,9 +302,9 @@
       MUST meet the requirements in this section.</t>
 
       <t>Application instantiations MUST NOT prevent other
-      application instantiations from using this port.
+      application instantiations from using the Multicast Application Port.
       On hosts using POSIX-like socket APIs <xref target="POSIX"/>,
-      this is typically accomplished by enabling a socket option
+      sharing is typically accomplished by enabling a socket option
       before binding the socket.
       Common socket options include <tt>SO_REUSEADDR</tt>,
       <tt>SO_REUSEPORT</tt>, and <tt>SO_REUSE_MULTICASTPORT</tt>,
@@ -316,7 +312,7 @@
 
       <t>For efficiency, applications SHOULD use networking APIs
       in a way that minimizes reception of unwanted traffic
-      that the application then immediately has to discard.
+      that the application would then have to discard.
       An application using POSIX-like socket APIs MUST bind its
       multicast receiving socket to the application instantiation's
       multicast destination address and the Multicast Application Port,
@@ -324,20 +320,22 @@
       Applications MUST NOT bind their multicast receiving socket
       to the wildcard (zero) address
       (<xref target="RFC3493" sectionFormat="comma" section="3.8"/>).
-      (Note that with BSD Sockets and similar APIs, just binding to
+      (Note that with POSIX Sockets and similar APIs, just binding to
       the appropriate multicast destination address is insufficient.
       After binding, the application needs to use
       <tt>IP_ADD_MEMBERSHIP</tt>, <tt>IPV6_JOIN_GROUP</tt>,
       <tt>MCAST_JOIN_GROUP</tt>, <tt>MCAST_JOIN_SOURCE_GROUP</tt>, or equivalent
       to tell the networking stack that it should actually subscribe
-      to receive packets for the indicated multicast group address.)
-      Where available, applications SHOULD also use socket options such as
-      setting <tt>IP_MULTICAST_ALL</tt> or <tt>IPV6_MULTICAST_ALL</tt> to 0
-      to further restrict delivered traffic to only packets
-      that match the desired multicast group address and interface.
+      to receive packets for the indicated multicast group address
+      <xref target="RFC3678"/>.)
+      Where available, applications SHOULD also use socket options
+      that further restrict delivered traffic to packets that
+      match the desired multicast group address and interface
+      (for example, on Linux, setting <tt>IP_MULTICAST_ALL</tt>
+      or <tt>IPV6_MULTICAST_ALL</tt> to 0)."
       An application receiving traffic for more than one
       multicast group address needs a separate
-      bound socket for each desired multicast group address.</t>
+      bound socket for each one.</t>
 
       <t>Applications MUST
       discard all received non-multicast packets
@@ -347,12 +345,10 @@
       <t>As a further safeguard, applications MUST discard
       any datagram received on the Multicast Application Port
       unless it matches the desired multicast group address,
-      and interface, if specified.
-      Relevant socket API mechanisms such as <tt>IP_PKTINFO</tt> and
-      <tt>IPV6_PKTINFO</tt> are described in the Advanced Sockets API
-      for IPv6 <xref target="RFC3542"/> and
-      "Socket Interface Extensions for Multicast Source Filters"
-      <xref target="RFC3678"/>.</t>
+      and, if one is specified, the desired interface.
+      Relevant mechanisms include
+      <tt>IPV6_PKTINFO</tt> <xref target="RFC3542"/>
+      and, where available, <tt>IP_PKTINFO</tt>.</t>
 
       <t>Applications MUST NOT send any non-multicast
       packets using the Multicast Application Port
@@ -362,57 +358,53 @@
     <section title="Host Requirements" anchor="host">
       <t>Hosts implementing this specification MUST require
       applications using the Multicast Application Port
-      to use it non-exclusively, following the steps
+      to use it non-exclusively, as
       described in <xref target="application"/>.</t>
 
       <t>If an application fails to follow the correct steps
       to share the Multicast Application Port, or attempts
       to bind a socket using the Multicast Application Port
       in conjunction with something other than a valid multicast
-      destination address, then the networking API MUST return
-      error code EADDRINUSE (or throw an exception, or equivalent)
-      and refuse the application's attempt to bind to the
-      Multicast Application Port. This helps the application
+      destination address, then the networking API MUST reject
+      the bind attempt with error <tt>EINVAL</tt> or equivalent.
+      This requirement helps the application
       developer discover and correct any mistakes.
       The networking API MUST NOT try to be "helpful" by silently
       correcting the misbehaving application and automatically
       granting it shared access to the Multicast Application Port.
-      Doing so would allow an incorrectly written application
-      to work on newer platforms that implement this modified
-      behavior but fail on older platforms that do not.</t>
+      Doing so would let an incorrectly written application
+      work on platforms that silently correct the error,
+      only to fail on older platforms that do not.</t>
 
       <t>For efficiency,
-      hosts SHOULD deliver to an application endpoint (e.g., a socket)
-      only packets for the multicast group address(es) that
-      the application endpoint has joined
-      (and received on the desired network interface, if specified).
-      Technically, this is not essential, since applications
-      are required to discard incorrectly delivered datagrams.
-      However, it is advisable to perform this filtering for
-      efficiency, since it is wasteful to deliver packets to
-      an application endpoint only to have that application
-      promptly discard them.</t>
+      hosts SHOULD deliver to each application endpoint (e.g., a socket)
+      only those packets that are addressed to a
+      multicast group address the endpoint has joined and that
+      arrive on the desired network interface, if one is specified.
+      This filtering is not strictly required, because
+      applications discard incorrectly delivered packets themselves
+      (<xref target="application"/>), but it avoids the waste of
+      delivering packets only to have them discarded.</t>
 
       <t>Hosts MUST
       discard all received non-multicast packets
       that use the Multicast Application Port
       as either a source or destination port.</t>
 
-      <t>Hosts MUST prevent applications from sending
-      non-multicast packets using the Multicast Application Port
-      as either a source or destination port by having
-      the send operation return error code EINVAL.</t>
+      <t>Hosts MUST cause any attempt to send a non-multicast packet
+      with the Multicast Application Port as its source or destination
+      port to fail with the error <tt>EINVAL</tt> or equivalent.</t>
 
       <t>Some networking APIs allow applications to disable
-      generation and checking of checksums for UDP packets
+      the generation and checking of UDP checksums
       <xref target="RFC6935"/> <xref target="RFC6936"/>
       (e.g., the Linux <tt>SO_NO_CHECK</tt> socket option).
-      Where networking APIs support disabling UDP checksums, this
-      MUST be implemented per endpoint (socket), as Linux does,
-      not as a system-wide default or per-port option.
-      With different multicast protocols sharing the Multicast
-      Application Port, the UDP port cannot be used to identify a
-      traffic flow to determine which UDP checksum policy to apply.</t>
+      Where a networking API supports disabling UDP checksums,
+      the setting MUST apply per endpoint (socket), as on Linux,
+      rather than system-wide or per port.
+      Because different multicast protocols share the Multicast
+      Application Port, the port number cannot identify a
+      traffic flow for the purpose of selecting a checksum policy.</t>
     </section>
 
     <section title="Firewall Considerations" anchor="firewall">
@@ -557,15 +549,15 @@ Port Number         8738]]>
       </artwork>
 
       <t>IANA is <em>requested</em> to update its "Application for Service
-      Names and User Port Numbers" <xref target="IANA-APP"/>
-      to reference this document and include text
+      Names and User Port Numbers" form <xref target="IANA-APP"/>
+      to reference this document and to include text
       asking applicants to consider whether using the
       Multicast Application Port would be appropriate.
       These changes will help applicants understand that a dedicated
       port may be unnecessary for their multicast protocol.
-      If the applicant believes that their multicast protocol does
-      require its own dedicated port, the responsibility belongs with the
-      Designated Expert to ascertain whether the applicant is correct. </t>
+      If the applicant believes that their multicast protocol requires
+      a dedicated port, the Designated Expert <xref target="RFC6335"/>
+      is responsible for determining whether that is the case.</t>
     </section>
   </middle>
 
@@ -644,14 +636,14 @@ Port Number         8738]]>
       and in particular to the following individuals:</t>
 
       <ul>
-        <li>Joe Touch for his advice on port assignment</li>
-        <li>Lorenzo Colitti for his suggestions on host requirements</li>
+        <li>Joe Touch for advice on port assignment</li>
+        <li>Lorenzo Colitti for suggestions on host requirements</li>
         <li>David Schinazi for pointing out likely port conflicts
         with several major operating systems</li>
         <li>Juliusz Chroboczek for suggestions on the source port to use
         for multicast messages when unicast replies are expected</li>
         <li>Dave Thaler for an insightful discussion of how the Multicast
-        Application Port would operates in the presence of a firewall</li>
+        Application Port would operate in the presence of a firewall</li>
       </ul>
     </section>
   </back>
