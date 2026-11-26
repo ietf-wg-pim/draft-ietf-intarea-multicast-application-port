@@ -166,12 +166,12 @@
 
       <t>This document does not specify any on-the-wire protocol,
       except inasmuch as it specifies the 16-bit value
-      that goes in the Destination Port field in the UDP header
+      that goes in the destination port field in the UDP header
       for multicast traffic that follows this specification.
       If multiple applications
       (or multiple instantiations of the same application)
       on a single host are to receive multicast traffic with the same 16-bit
-      value in the Destination Port field of the UDP header,
+      value in the destination port field of the UDP header,
       they need to follow certain procedures
       to share that UDP port cooperatively.
       This document describes those procedures with reference to
