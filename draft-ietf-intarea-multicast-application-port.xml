@@ -323,30 +323,25 @@
 
     <section title="Host Requirements" anchor="host">
       <t>Hosts implementing this specification MUST require
-      applications using this port to use it non-exclusively.
-      On hosts using POSIX-like socket APIs <xref target="POSIX"/>,
-      this is typically accomplished by enabling a socket option
-      before binding the socket.
-      Common socket options include <tt>SO_REUSEADDR</tt>,
-      <tt>SO_REUSEPORT</tt>, and <tt>SO_REUSE_MULTICASTPORT</tt>,
-      but the specific mechanism varies by platform.
-      This requirement ensures that applications developed on a
-      conformant host will follow the correct rules, and therefore
-      will also work correctly on older hosts that do not enforce
-      these protections on the Multicast Application Port.</t>
+      applications using the Multicast Application Port
+      to use it non-exclusively, following the steps
+      described in <xref target="application"/>.</t>
 
-      <t>If an application fails to follow the correct steps to
-      share the Multicast Application Port, then the networking
-      API MUST return an error code, throw an exception, or
-      otherwise fail the application's attempt to bind to the
+      <t>If an application fails to follow the correct steps
+      to share the Multicast Application Port, or attempts
+      to bind a socket using the Multicast Application Port
+      in conjunction with something other than a valid multicast
+      destination address, then the networking API MUST return
+      error code EADDRINUSE (or throw an exception, or equivalent)
+      and refuse the application's attempt to bind to the
       Multicast Application Port. This helps the application
       developer discover and correct any mistakes.
       The networking API MUST NOT try to be "helpful" by silently
       correcting the misbehaving application and automatically
       granting it shared access to the Multicast Application Port.
-      Doing so would let an incorrectly written application
-      work on newer platforms that implement these protections
-      but fail on older platforms that do not.</t>
+      Doing so would allow an incorrectly written application
+      to work on newer platforms that implement this modified
+      behavior but fail on older platforms that do not.</t>
 
       <t>For efficiency,
       hosts SHOULD deliver to an application endpoint (e.g., a socket)
@@ -368,7 +363,7 @@
       <t>Hosts MUST prevent applications from sending
       non-multicast packets using the Multicast Application Port
       as either a source or destination port by having
-      the send operation return an error code.</t>
+      the send operation return error code EINVAL.</t>
 
       <t>Some networking APIs allow applications to disable
       generation and checking of checksums for UDP packets
