@@ -408,7 +408,8 @@
       application that uses both multicast and unicast messages
       and could be deployed in an environment using firewalls.
       Firewall configuration with a dedicated port is
-      straightforward: allow all messages using that port.
+      straightforward: allow all messages using that port
+      <xref target="RFC7605"/>.
       However, port-based rules offer limited assurance,
       because a rogue application can use the same port to
       masquerade as the legitimate trusted application.</t>
