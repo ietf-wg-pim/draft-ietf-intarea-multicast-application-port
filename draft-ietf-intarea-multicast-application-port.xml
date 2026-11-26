@@ -90,7 +90,7 @@
       activity. The network's multicast routing infrastructure uses
       the multicast group address to determine where packets should be
       forwarded, so that they reach all group members that need them,
-      without being delivered to hosts or networks that do not.</t>
+      without being delivered to networks or hosts that do not.</t>
 
       <t>For the purposes of this document, a "multicast packet"
       is a packet whose destination address is a multicast address.
@@ -220,11 +220,49 @@
       particularly on wireless media <xref target="RFC9119"/>.</t>
 
       <section title="Multicast Address Assignment">
-        <t>The ability to identify a multicast application instantiation
-        by its multicast group address assumes that a unique multicast
-        group address has been assigned to the application instantiation.
-        These assignments are outside the scope of this document.
-        Further information is available in
+        <t>The ability to identify each multicast application instantiation
+        by its multicast group address requires that each application
+        instantiation is assigned its own unique multicast group address.
+        These unique multicast group address assignments are
+        outside the scope of this document,
+        and the requirement for each application instantiation
+        to have its own unique multicast group address applies
+        to all multicast traffic, regardless of whether it is
+        using the Multicast Application Port specified in this
+        document or some other UDP port.</t>
+
+        <t>The network's multicast routing infrastructure
+        determines where packets should be forwarded by
+        examining the multicast group address of an IP packet,
+        without regard for the destination port field in the UDP header.
+        The goal of multicast routing is for the network to deliver
+        packets efficiently to all the intended recipients of those packets,
+        <em>without</em> wasting network resources by delivering packets
+        to networks and hosts that do not need to receive those packets.
+        If numerous multicast applications were to use the same
+        multicast group address, differentiating their packets
+        only by using different destination ports in the UDP header,
+        then the network would expend resources to deliver
+        <em>all</em> the traffic for <em>all</em> the applications to
+        <em>all</em> hosts running <em>any</em> of those applications.
+        In the extreme case, where multicast applications send
+        their traffic to the "all hosts" multicast address and
+        rely on the UDP destination port to differentiate traffic,
+        multicast would degenerate into becoming a worldwide broadcast
+        system, with every host receiving every packet, and every network
+        stack discarding all the unwanted packets after reception.
+        Clearly worldwide broadcast would not be not scaleable,
+        and would not be in keeping with the spirit
+        of how IP multicast is expected to operate
+        <xref target="RFC2365"/>
+        <xref target="RFC3307"/>
+        <xref target="RFC4007"/>
+        <xref target="RFC4291"/>
+        <xref target="RFC5771"/>
+        <xref target="RFC6308"/>
+        <xref target="RFC7346"/>.</t>
+
+        <t>Further information is available in
         the overview of the Internet multicast addressing architecture
         <xref target="RFC6308"/>
         and the following IANA registry groups:</t>
@@ -561,9 +599,12 @@ Port Number         8738]]>
       </reference>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.1112.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.1122.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2365.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3307.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3542.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.3678.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4007.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.4291.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.5771.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6308.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6335.xml"/>
@@ -572,6 +613,7 @@ Port Number         8738]]>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6935.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.6936.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7288.xml"/>
+      <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7346.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7605.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7942.xml"/>
       <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9119.xml"/>
