@@ -328,11 +328,6 @@
       to tell the networking stack that it should actually subscribe
       to receive packets for the indicated multicast group address
       <xref target="RFC3678"/>.)
-      Where available, applications SHOULD also use socket options
-      that further restrict delivered traffic to packets that
-      match the desired multicast group address and interface
-      (for example, on Linux, setting <tt>IP_MULTICAST_ALL</tt>
-      or <tt>IPV6_MULTICAST_ALL</tt> to 0)."
       An application receiving traffic for more than one
       multicast group address needs a separate
       bound socket for each one.</t>
