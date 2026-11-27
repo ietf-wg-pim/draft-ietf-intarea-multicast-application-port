@@ -83,7 +83,7 @@
       <t>This document uses the term "multicast group address"
       to refer collectively to the IP destination address for
       Any-Source Multicast (ASM) <xref target="RFC1112"/>
-      and the (S,G) pair for
+      and the (S,G) channel for
       Source-Specific Multicast (SSM) <xref target="RFC4607"/>,
       since they serve the same purpose.
       Both exist to identify a stream of packets related to a particular
