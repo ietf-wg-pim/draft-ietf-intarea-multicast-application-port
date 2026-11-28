@@ -337,7 +337,8 @@
       the <tt>SO_REUSEPORT</tt> socket option,
       or both, as the platform requires.
       The details vary by platform. For example,
-      Microsoft Windows uses <tt>SO_REUSE_MULTICASTPORT</tt> instead.</t>
+      Microsoft Windows provides <tt>SO_REUSE_MULTICASTPORT</tt>,
+      which may be preferable.</t>
 
       <t>For efficiency, applications SHOULD use networking APIs
       in a way that minimizes reception of unwanted traffic
