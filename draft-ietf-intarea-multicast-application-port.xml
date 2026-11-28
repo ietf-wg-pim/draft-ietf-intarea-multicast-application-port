@@ -358,7 +358,7 @@
       <tt>MCAST_JOIN_GROUP</tt>, <tt>MCAST_JOIN_SOURCE_GROUP</tt>
       <xref target="RFC3678"/>, or equivalent,
       to tell the networking stack that it should actually subscribe
-      to receive packets for the indicated multicast group address.)
+      to receive packets for the indicated multicast group address.
       An application receiving traffic for more than one
       multicast group address needs a separate
       bound socket for each one.</t>
