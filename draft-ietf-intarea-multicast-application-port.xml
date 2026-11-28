@@ -313,7 +313,7 @@
       prevent other applications on the same host
       (including other copies of the same application)
       from receiving multicast packets addressed to
-      the same UDP port, regardless of whether
+      the Multicast Application Port, regardless of whether
       those packets are addressed to
       the same multicast group address or
       different multicast group addresses.</t>
