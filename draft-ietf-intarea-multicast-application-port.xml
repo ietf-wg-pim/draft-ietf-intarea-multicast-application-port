@@ -147,13 +147,20 @@
       is unnecessary because the multicast group address already
       provides a unique identifier for each application instantiation
       within a given multicast scope.
-      Socket options such as <tt>SO_REUSEPORT</tt>
+      Socket options such as
+      <tt>SO_REUSEADDR</tt> and <tt>SO_REUSEPORT</tt>
       (details vary by API) already
       allow multiple copies of the same multicast application to
-      run on the same host and share a single UDP port.
+      run on the same host and receive copies of multicast packets
+      addressed to the same multicast group address and UDP port.
       This approach is widely used to run
       multiple independent implementations of Multicast DNS
-      <xref target="RFC6762"/> on a single host.</t>
+      <xref target="RFC6762"/> on a single host,
+      where two independent implementations of Multicast DNS
+      (e.g., a smart speaker that implements both
+      AirPlay and Chromecast music streaming)
+      both receive copies of all received Multicast DNS packets
+      addressed to 224.0.0.251:5353.</t>
 
       <t>This existing practice inspired this specification.
       If the destination port number is not needed for multicast traffic,
@@ -184,8 +191,9 @@
       <t>The Multicast Application Port can be used
       with both IPv6 and IPv4.</t>
 
-      <t>On any platform that supports <tt>SO_REUSEPORT</tt>
-      or an equivalent, multicast applications can begin using
+      <t>On any platform that supports
+      <tt>SO_REUSEADDR</tt> and <tt>SO_REUSEPORT</tt>
+      or equivalents, multicast applications can begin using
       the Multicast Application Port immediately by following
       the guidance in <xref target="application"/>.
 
@@ -301,14 +309,35 @@
       <t>Applications that use the Multicast Application Port
       MUST meet the requirements in this section.</t>
 
-      <t>Application instantiations MUST NOT prevent other
-      application instantiations from using the Multicast Application Port.
-      On hosts using POSIX-like socket APIs <xref target="POSIX"/>,
-      sharing is typically accomplished by enabling a socket option
-      before binding the socket.
-      Common socket options include <tt>SO_REUSEADDR</tt>,
-      <tt>SO_REUSEPORT</tt>, and <tt>SO_REUSE_MULTICASTPORT</tt>,
-      but the specific mechanism varies by platform.</t>
+      <t>An application MUST NOT
+      prevent other applications on the same host
+      (including other copies of the same application)
+      from receiving multicast packets addressed to
+      the same UDP port, regardless of whether
+      those packets are addressed to
+      the same multicast group address or
+      different multicast group addresses.</t>
+
+      <t>The intent is that any applications that can each receive
+      the desired multicast packets when running on <em>separate</em>
+      hosts can also do so when running on the <em>same</em> host.
+      For example, consider a temperature sensor that
+      multicasts the current temperature once per minute.
+      Two independent applications on one host,
+      such as a display and a data logger,
+      might both need to receive these updates.
+      A "first come, first served" outcome is not acceptable.
+      In that outcome, the first application to start receives the packets,
+      and the second fails because the first has claimed exclusive access
+      to the multicast group address, the UDP port, or both.</t>
+
+      <t>On hosts using POSIX-like socket APIs <xref target="POSIX"/>,
+      sharing is typically accomplished by enabling
+      the <tt>SO_REUSEADDR</tt> socket option,
+      the <tt>SO_REUSEPORT</tt> socket option,
+      or both, as the platform requires.
+      The details vary by platform. For example,
+      Microsoft Windows uses <tt>SO_REUSE_MULTICASTPORT</tt> instead.</t>
 
       <t>For efficiency, applications SHOULD use networking APIs
       in a way that minimizes reception of unwanted traffic
@@ -317,17 +346,19 @@
       multicast receiving socket to the application instantiation's
       multicast destination address and the Multicast Application Port,
       so that the host delivers only packets sent to that address.
-      Applications MUST NOT bind their multicast receiving socket
+      Applications MUST NOT bind their multicast receiving sockets
       to the wildcard (zero) address
-      (<xref target="RFC3493" sectionFormat="comma" section="3.8"/>).
-      (Note that with POSIX Sockets and similar APIs, just binding to
+      (<xref target="RFC3493" sectionFormat="comma" section="3.8"/>).</t>
+
+      <t>Note that with POSIX Sockets and similar APIs, just binding to
       the appropriate multicast destination address is insufficient.
       After binding, the application needs to use
-      <tt>IP_ADD_MEMBERSHIP</tt>, <tt>IPV6_JOIN_GROUP</tt>,
-      <tt>MCAST_JOIN_GROUP</tt>, <tt>MCAST_JOIN_SOURCE_GROUP</tt>, or equivalent
+      <tt>IP_ADD_MEMBERSHIP</tt>, <tt>IPV6_JOIN_GROUP</tt>
+      <xref target="RFC3493"/>,
+      <tt>MCAST_JOIN_GROUP</tt>, <tt>MCAST_JOIN_SOURCE_GROUP</tt>
+      <xref target="RFC3678"/>, or equivalent,
       to tell the networking stack that it should actually subscribe
-      to receive packets for the indicated multicast group address
-      <xref target="RFC3678"/>.)
+      to receive packets for the indicated multicast group address.)
       An application receiving traffic for more than one
       multicast group address needs a separate
       bound socket for each one.</t>
@@ -338,16 +369,17 @@
       as either a source or destination port.</t>
 
       <t>As a further safeguard, applications MUST discard
-      any datagram received on the Multicast Application Port
-      unless it matches the desired multicast group address,
+      any packet received on the Multicast Application Port
+      unless it matches the desired multicast group address
       and, if one is specified, the desired interface.
-      Relevant mechanisms include
+      Mechanisms for determining a received packet's
+      destination address and arrival interface include
       <tt>IPV6_PKTINFO</tt> <xref target="RFC3542"/>
       and, where available, <tt>IP_PKTINFO</tt>.</t>
 
       <t>Applications MUST NOT send any non-multicast
       packets using the Multicast Application Port
-      as either a source port or destination port.</t>
+      as either a source or destination port.</t>
     </section>
 
     <section title="Host Requirements" anchor="host">
@@ -356,17 +388,20 @@
       to use it non-exclusively, as
       described in <xref target="application"/>.</t>
 
-      <t>If an application fails to follow the correct steps
-      to share the Multicast Application Port, or attempts
-      to bind a socket using the Multicast Application Port
-      in conjunction with something other than a valid multicast
-      destination address, then the networking API MUST reject
-      the bind attempt with error <tt>EINVAL</tt> or equivalent.
-      This requirement helps the application
-      developer discover and correct any mistakes.
+      <t>The networking API MUST reject,
+      with the error <tt>EINVAL</tt> or equivalent,
+      any attempt to bind a socket to the Multicast Application Port if:
+      <ul>
+        <li>the address being bound is not a
+        valid multicast destination address, or</li>
+        <li>the application has not enabled shared reception
+        of multicast packets (<xref target="application"/>)</li>
+      </ul>
+      This requirement helps application developers
+      discover and correct mistakes.
       The networking API MUST NOT try to be "helpful" by silently
-      correcting the misbehaving application and automatically
-      granting it shared access to the Multicast Application Port.
+      correcting a misbehaving application and automatically
+      granting it shared access.
       Doing so would let an incorrectly written application
       work on platforms that silently correct the error,
       only to fail on older platforms that do not.</t>
@@ -377,9 +412,9 @@
       multicast group address the endpoint has joined and that
       arrive on the desired network interface, if one is specified.
       This filtering is not strictly required, because
-      applications discard incorrectly delivered packets themselves
-      (<xref target="application"/>), but it avoids the waste of
-      delivering packets only to have them discarded.</t>
+      <xref target="application"/> requires applications to discard
+      incorrectly delivered packets themselves, but it avoids the
+      waste of delivering packets only to have them discarded.</t>
 
       <t>Hosts MUST
       discard all received non-multicast packets
